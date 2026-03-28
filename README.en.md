@@ -6,7 +6,7 @@
 [![Static Badge](https://img.shields.io/badge/I%20Ching-Accurate-red)](.)
 [![Made with Love](https://img.shields.io/badge/Made%20with-%E2%9D%A4-red)](.)
 
-&gt; **Hand injury prevents divination? Continue the Way of Changes through code.**  
+&gt; **No tools for divination? Continue the Way of Changes through code.**  
 &gt; Sincerity brings accuracy; heed the taboos, do not be careless.
 
 ## Origin Story
