@@ -1,4 +1,5 @@
 [English Version](./README.en.md)
+
 # 高岛易断略筮法 · 起卦模拟器
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -42,6 +43,12 @@
 
 ## 使用方法
 
+### 方法一：在线使用（推荐）
+**直接访问 👉 https://freeyeahman-ai.github.io/gaodao-iching/**
+
+无需下载，手机浏览器或电脑浏览器均可直接使用，数据仅在本地处理。
+
+### 方法二：本地使用
 1. 下载 `index.html`，用浏览器直接打开（无需服务器）
 2. 选择性别（男女分堆顺序不同）
 3. 默念所占之事，填写于输入框
@@ -55,7 +62,6 @@
 - **无依赖**：不依赖任何第三方库，纯原生 JavaScript 实现
 - **真太阳时算法**：基于经度差与均时差（Equation of Time）计算
 
-
 ## 致谢
 
 - 高岛吞象《高岛易断》
@@ -68,6 +74,6 @@
 ## 反馈与交流
 如有建议或发现bug，欢迎提交 Issue 或联系作者：
 - 小红书：@卡靠
-- Email：273062172@qq.com
+- Email：你的邮箱
 
 **愿君问卦之时，心存敬畏，得之所问。**
