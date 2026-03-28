@@ -5,7 +5,7 @@
 [![Static Badge](https://img.shields.io/badge/易-神准-red)](.)
 [![Made with Love](https://img.shields.io/badge/Made%20with-%E2%9D%A4-red)](.)
 
-&gt; **手伤不能起卦？用代码延续易道。**  
+&gt; **没有工具不能起卦？用代码延续易道。**  
 &gt; 心诚则灵，但占卦有忌，不可不慎。
 
 ## 缘起
