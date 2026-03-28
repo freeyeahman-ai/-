@@ -68,6 +68,6 @@ This tool is for studying traditional culture only. Divination results are for r
 ## Feedback & Contact
 For suggestions or bug reports, please submit an Issue or contact the author:
 - Xiaohongshu (小红书): @卡靠
-- Email: your-email@example.com
+- Email: 273062172@qq.com
 
 **May you approach the I Ching with reverence, and receive the answers you seek.**
