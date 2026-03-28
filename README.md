@@ -1,3 +1,4 @@
+[English Version](./README.en.md)
 # 高岛易断略筮法 · 起卦模拟器
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
