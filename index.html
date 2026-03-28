@@ -123,17 +123,25 @@
             list-style: none;
             color: #ff9999;
             font-size: 0.9rem;
-            line-height: 1.8;
+            line-height: 1.6;
         }
         .warning-list li {
             padding-left: 20px;
             position: relative;
+            margin-bottom: 6px;
+        }
+        .warning-list li:last-child {
+            margin-bottom: 0;
         }
         .warning-list li::before {
             content: "•";
             position: absolute;
             left: 5px;
             color: #ff6666;
+        }
+        .warning-list li strong {
+            color: #ffaaaa;
+            font-size: 0.95rem;
         }
         .divination-area { display: none; }
         .divination-area.active { display: block; }
@@ -535,6 +543,21 @@
             display: none;
         }
         
+        /* 新增：免责声明样式 */
+        .disclaimer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: #888;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            border-top: 1px solid rgba(201, 162, 39, 0.2);
+        }
+        .disclaimer p {
+            margin: 5px 0;
+        }
+        
         @media (max-width: 600px) {
             h1 { font-size: 1.5rem; }
             .gua-display { gap: 20px; }
@@ -544,6 +567,7 @@
             .slider-thumb { width: 36px; height: 36px; }
         }
     </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -556,9 +580,10 @@
         <div class="warning-box">
             <div class="warning-title">占卦禁忌</div>
             <ul class="warning-list">
-                <li>禁止同一问题连续起卦（再三渎）</li>
-                <li>禁止问生死</li>
-                <li>心不诚不占、戏谑不占</li>
+                <li><strong>一问不二占：</strong>初筮告，再三渎。同一问题连续起卦，反致卦象纷乱。</li>
+                <li><strong>一日不过三：</strong>易道贵静，频占则心浮。建议一日一课，待象应后再问。</li>
+                <li><strong>生死不问卦：</strong>寿夭生死，乃天机大忌，不占。</li>
+                <li><strong>不诚不敬不占：</strong>戏谑试探、心存轻慢，神不告也。</li>
             </ul>
         </div>
         
@@ -678,7 +703,7 @@
             </div>
             
             <div class="dongyao-highlight" id="dongyaoHighlight">
-                <div class="dongyao-title">⚡ 动爻</div>
+                <div class="dongyao-title">⚡ 动爻（重要性51%）</div>
                 <div class="dongyao-content" id="dongyaoContent">-</div>
                 <div class="dongyao-meaning" id="dongyaoMeaning"></div>
             </div>
@@ -715,6 +740,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- 新增：免责声明 -->
+        <div class="disclaimer">
+            <p>天机只在本地流转，不入境，不留痕，不存于云端。</p>
+            <p>问卦之人，心诚则灵，所输入之时辰心事，皆如轻烟散去，无人得见。</p>
         </div>
     </div>
     
@@ -1316,11 +1347,11 @@
             let expText = '';
             
             if (benGua) {
-                expText += `本卦为${benGua.name}，${benGua.explanation}\n\n`;
+                expText += `本卦（重要性30—40%）为${benGua.name}，${benGua.explanation}\n\n`;
             }
             
             if (bianGua && bianGua.name !== benGua.name) {
-                expText += `变卦为${bianGua.name}，${bianGua.explanation}\n\n`;
+                expText += `变卦（重要性10—30%）为${bianGua.name}，${bianGua.explanation}\n\n`;
             }
             
             expText += `动爻${yaoName[dongYao - 1]}发动，${isYangDong ? '阳变阴' : '阴变阳'}，得变卦。`;
@@ -1347,7 +1378,6 @@
             const benGuaName = document.getElementById('benGuaName').textContent;
             const bianGuaName = document.getElementById('bianGuaName').textContent;
             const dongyaoContent = document.getElementById('dongyaoContent').textContent;
-            const explanation = document.getElementById('guaExplanation').textContent;
             const methodInfo = document.getElementById('methodInfo').textContent;
             const beijingTime = document.getElementById('beijingTime').textContent;
             const trueSolarTime = document.getElementById('trueSolarRow').style.display !== 'none' 
@@ -1356,6 +1386,23 @@
             const dizhi = document.getElementById('dizhiRow').style.display !== 'none'
                 ? document.getElementById('dizhiTime').textContent
                 : '';
+            
+            // 计算本卦和变卦编码以获取详细解析
+            const shangCode = baguaCode[shangGua];
+            const xiaCode = baguaCode[xiaGua];
+            const benGuaCode = xiaCode + shangCode;
+            
+            let bianGuaCode = '';
+            for (let i = 0; i < 6; i++) {
+                if (i === dongYao - 1) {
+                    bianGuaCode += benGuaCode[i] === '1' ? '0' : '1';
+                } else {
+                    bianGuaCode += benGuaCode[i];
+                }
+            }
+            
+            const benGuaData = guaData[benGuaCode];
+            const bianGuaData = guaData[bianGuaCode];
             
             const now = new Date();
             const dateStr = now.toLocaleString('zh-CN');
@@ -1372,8 +1419,14 @@
 动爻：${dongyaoContent}
 ${methodInfo}
 
-卦象解析：
-${explanation}
+【本卦（重要性30—40%）卦辞解析】
+${benGuaData ? benGuaData.explanation : '无'}
+
+【变卦（重要性10—30%）（之卦）卦辞解析】
+${bianGuaData ? bianGuaData.explanation : '无'}
+
+【动爻（重要性51%）解析】
+${dongyaoMeanings[dongYao]}
 ========================
             `.trim();
             
