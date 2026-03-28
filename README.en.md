@@ -43,6 +43,12 @@ This project strictly adheres to traditional I Ching taboos:
 
 ## Usage
 
+### Method 1: Use Online (Recommended)
+**Visit directly 👉 https://freeyeahman-ai.github.io/gaodao-iching/**
+
+No download required. Works on mobile and desktop browsers. All data is processed locally.
+
+### Method 2: Use Offline
 1. Download `index.html` and open it directly in your browser (no server needed)
 2. Select gender (splitting sequence differs for male/female)
 3. Meditate on your question and enter it in the input field
