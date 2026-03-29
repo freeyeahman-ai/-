@@ -493,7 +493,7 @@
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
-            to { opacity: 1; transform: translate(-50(), -50%) scale(1); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
         .hidden { display: none !important; }
         
@@ -567,6 +567,20 @@
             margin-top: 20px;
         }
         
+        /* 当前问题显示样式 */
+        .current-question-display {
+            text-align: center;
+            color: #c9a227;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(201, 162, 39, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            font-weight: bold;
+            word-break: break-all;
+        }
+        
         @media (max-width: 600px) {
             h1 { font-size: 1.5rem; }
             .gua-display { gap: 20px; }
@@ -593,7 +607,7 @@
             <p class="subtitle">滑动分堆 · 诚心起卦</p>
         </header>
         
-        <div class="warning-box">
+        <div class="warning-box" id="warningBox">
             <div class="warning-title">占卦禁忌</div>
             <ul class="warning-list">
                 <li><strong>一问不二占：</strong>初筮告，再三渎。同一问题连续起卦，反致卦象纷乱。</li>
@@ -603,7 +617,7 @@
             </ul>
         </div>
         
-        <div class="card">
+        <div class="card" id="setupCard">
             <h2 class="card-title">起卦设置</h2>
             <div class="setup-area">
                 <div class="form-group">
@@ -633,13 +647,18 @@
             
             <div class="step-indicator">
                 <div class="step-title" id="stepTitle">第一步：求上卦</div>
-                <div class="step-desc" id="stepDesc">滑动下方进度条分配筮竹</div>
-                <div class="step-hint" id="stepHint"></div>
+                <div class="step-desc" id="stepDesc">左手滑动下方进度条，将筮竹分到左手</div>
             </div>
             
             <div class="slider-area" id="sliderArea">
+                <!-- 当前所占之事显示 -->
+                <div class="current-question-display" id="currentQuestionDisplay">
+                    所占之事：<span id="questionText"></span>
+                </div>
+                
                 <div class="split-instruction">
-                    请<strong>静心默念所占之事</strong>，至诚无息时，滑动分配筮竹
+                    <div style="margin-bottom: 10px; color: #c9a227; font-size: 1.1rem;">请静心默念所占之事，至诚无息时，停止滑动</div>
+                    <div style="color: #888; font-size: 0.9rem;">然后点按「至诚无息，确认分堆」</div>
                 </div>
                 
                 <div id="singleSliderBox" class="single-slider-box left">
@@ -745,9 +764,15 @@
                 <button id="saveBtn" class="btn btn-secondary">导出结果</button>
                 <button id="historyBtn" class="btn btn-secondary" onclick="toggleHistory()">占卜记录</button>
             </div>
+            
+            <!-- 结果页面免责声明 -->
+            <div class="disclaimer">
+                <p>天机只在本地流转，不入境，不留痕，不存于云端。</p>
+                <p>问卦之人，心诚则灵，所输入之时辰心事，皆如轻烟散去，无人得见。</p>
+            </div>
         </div>
         
-        <div class="card">
+        <div class="card" id="methodCard">
             <h2 class="card-title">起卦方法</h2>
             <div class="info-text">
                 <p style="margin-bottom: 15px;"><strong>高岛易断略筮法</strong>是日本易学家高岛吞象所创的简化筮法，本程序将其数字化，让您可以在电脑上模拟传统筮竹分堆的过程。</p>
@@ -769,8 +794,8 @@
             </div>
         </div>
         
-        <!-- 新增：免责声明 -->
-        <div class="disclaimer">
+        <!-- 首页免责声明 -->
+        <div class="disclaimer" id="disclaimerBox">
             <p>天机只在本地流转，不入境，不留痕，不存于云端。</p>
             <p>问卦之人，心诚则灵，所输入之时辰心事，皆如轻烟散去，无人得见。</p>
         </div>
@@ -916,6 +941,7 @@
         const sliderFill = document.getElementById('sliderFill');
         const sliderThumb = document.getElementById('sliderThumb');
         const bambooVisual = document.getElementById('bambooVisual');
+        const questionText = document.getElementById('questionText');
         
         function initBambooVisual() {
             bambooVisual.innerHTML = '';
@@ -962,6 +988,16 @@
             }
             
             lastQuestion = currentQuestion;
+            
+            // 隐藏起卦设置、占卦禁忌、起卦方法等板块
+            document.getElementById('warningBox').style.display = 'none';
+            document.getElementById('setupCard').style.display = 'none';
+            document.getElementById('methodCard').style.display = 'none';
+            document.getElementById('disclaimerBox').style.display = 'none';
+            
+            // 显示所占之事
+            questionText.textContent = currentQuestion || '所占之事未填写';
+            
             divinationArea.classList.add('active');
             startBtn.parentElement.classList.add('hidden');
             initDivination();
@@ -982,7 +1018,6 @@
         function updateStepDisplay() {
             const stepTitle = document.getElementById('stepTitle');
             const stepDesc = document.getElementById('stepDesc');
-            const stepHint = document.getElementById('stepHint');
             
             for (let i = 1; i <= 3; i++) {
                 const stepEl = document.getElementById(`step${i}`);
@@ -995,40 +1030,34 @@
             if (gender === 'male') {
                 if (currentStep === 1) {
                     stepTitle.textContent = '第一步：求上卦';
-                    stepDesc.textContent = '滑动下方进度条，将筮竹分到左手';
-                    stepHint.textContent = '左手数 ÷ 8 = 上卦';
+                    stepDesc.textContent = '左手滑动下方进度条，将筮竹分到左手';
                     currentHand = 'left';
                     currentPurpose = 'shang';
                 } else if (currentStep === 2) {
                     stepTitle.textContent = '第二步：求下卦';
-                    stepDesc.textContent = '滑动下方进度条，将筮竹分到右手';
-                    stepHint.textContent = '右手数 ÷ 8 = 下卦';
+                    stepDesc.textContent = '右手滑动下方进度条，将筮竹分到右手';
                     currentHand = 'right';
                     currentPurpose = 'xia';
                 } else if (currentStep === 3) {
                     stepTitle.textContent = '第三步：求动爻';
-                    stepDesc.textContent = '滑动下方进度条，将筮竹分到左手';
-                    stepHint.textContent = '左手数 ÷ 6 = 动爻';
+                    stepDesc.textContent = '左手滑动下方进度条，将筮竹分到左手';
                     currentHand = 'left';
                     currentPurpose = 'dong';
                 }
             } else {
                 if (currentStep === 1) {
                     stepTitle.textContent = '第一步：求上卦';
-                    stepDesc.textContent = '滑动下方进度条，将筮竹分到右手';
-                    stepHint.textContent = '右手数 ÷ 8 = 上卦';
+                    stepDesc.textContent = '右手滑动下方进度条，将筮竹分到右手';
                     currentHand = 'right';
                     currentPurpose = 'shang';
                 } else if (currentStep === 2) {
                     stepTitle.textContent = '第二步：求下卦';
-                    stepDesc.textContent = '滑动下方进度条，将筮竹分到左手';
-                    stepHint.textContent = '左手数 ÷ 8 = 下卦';
+                    stepDesc.textContent = '左手滑动下方进度条，将筮竹分到左手';
                     currentHand = 'left';
                     currentPurpose = 'xia';
                 } else if (currentStep === 3) {
                     stepTitle.textContent = '第三步：求动爻';
-                    stepDesc.textContent = '滑动下方进度条，将筮竹分到右手';
-                    stepHint.textContent = '右手数 ÷ 6 = 动爻';
+                    stepDesc.textContent = '右手滑动下方进度条，将筮竹分到右手';
                     currentHand = 'right';
                     currentPurpose = 'dong';
                 }
@@ -1565,6 +1594,12 @@
             lastQuestion = '';
             // 关闭往卦面板
             document.getElementById('historyArea').style.display = 'none';
+            
+            // 恢复其他板块显示
+            document.getElementById('warningBox').style.display = '';
+            document.getElementById('setupCard').style.display = '';
+            document.getElementById('methodCard').style.display = '';
+            document.getElementById('disclaimerBox').style.display = '';
         });
         
         document.getElementById('saveBtn').addEventListener('click', () => {
@@ -1719,8 +1754,14 @@ ${dongyaoMeanings[dongYao]}
         function showHistoryFromHome() {
             // 隐藏其他区域
             startBtn.parentElement.classList.add('hidden');
+            document.getElementById('warningBox').style.display = 'none';
+            document.getElementById('setupCard').style.display = 'none';
+            document.getElementById('methodCard').style.display = 'none';
+            document.getElementById('disclaimerBox').style.display = 'none';
+            
             // 显示结果区域（用于展示历史记录）
             resultArea.classList.add('active');
+            
             // 清空当前结果
             document.getElementById('benGuaName').textContent = '-';
             document.getElementById('bianGuaName').textContent = '-';
@@ -1745,6 +1786,13 @@ ${dongyaoMeanings[dongYao]}
                 questionInput.value = '';
                 lastQuestion = '';
                 historyArea.style.display = 'none';
+                
+                // 恢复其他板块显示
+                document.getElementById('warningBox').style.display = '';
+                document.getElementById('setupCard').style.display = '';
+                document.getElementById('methodCard').style.display = '';
+                document.getElementById('disclaimerBox').style.display = '';
+                
                 // 恢复原来的点击事件
                 restartBtn.onclick = originalRestart;
             };
@@ -1758,6 +1806,12 @@ ${dongyaoMeanings[dongYao]}
             questionInput.value = '';
             lastQuestion = '';
             document.getElementById('historyArea').style.display = 'none';
+            
+            // 恢复其他板块显示
+            document.getElementById('warningBox').style.display = '';
+            document.getElementById('setupCard').style.display = '';
+            document.getElementById('methodCard').style.display = '';
+            document.getElementById('disclaimerBox').style.display = '';
         };
         
         // 显示历史记录列表
