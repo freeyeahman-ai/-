@@ -14,11 +14,37 @@
             padding: 15px;
         }
         .container { max-width: 900px; margin: 0 auto; }
+        
+        /* 语言切换器样式 */
+        .language-switcher {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+        }
+        .lang-btn {
+            background: rgba(201, 162, 39, 0.2);
+            border: 1px solid rgba(201, 162, 39, 0.5);
+            color: #c9a227;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            margin-left: 5px;
+        }
+        .lang-btn:hover, .lang-btn.active {
+            background: rgba(201, 162, 39, 0.4);
+            border-color: #c9a227;
+        }
+        
         header {
             text-align: center;
             padding: 20px 0;
             border-bottom: 2px solid #c9a227;
             margin-bottom: 20px;
+            position: relative;
         }
         h1 {
             font-size: 2rem;
@@ -497,7 +523,7 @@
         }
         .hidden { display: none !important; }
         
-        /* 新增的时间显示样式 */
+        /* 时间显示样式 */
         .time-display-box {
             background: rgba(201, 162, 39, 0.05);
             border: 1px solid rgba(201, 162, 39, 0.3);
@@ -543,7 +569,7 @@
             display: none;
         }
         
-        /* 新增：免责声明样式 */
+        /* 免责声明样式 */
         .disclaimer {
             text-align: center;
             padding: 20px;
@@ -596,49 +622,64 @@
                 width: 100%;
                 max-width: 300px;
             }
+            .language-switcher {
+                position: relative;
+                top: 0;
+                right: 0;
+                text-align: center;
+                margin-bottom: 10px;
+            }
         }
     </style>
+<base target="_blank">
+<base target="_blank">
 <base target="_blank">
 <base target="_blank">
 </head>
 <body>
     <div class="container">
+        <!-- 语言切换器 -->
+        <div class="language-switcher">
+            <button class="lang-btn active" onclick="switchLanguage('zh')" data-lang="zh">漢</button>
+            <button class="lang-btn" onclick="switchLanguage('en')" data-lang="en">EN</button>
+        </div>
+
         <header>
-            <h1>高岛易断略筮法</h1>
-            <p class="subtitle">滑动分堆 · 诚心起卦</p>
+            <h1 data-i18n="title">高岛易断略筮法</h1>
+            <p class="subtitle" data-i18n="subtitle">滑动分堆 · 诚心起卦</p>
         </header>
         
         <div class="warning-box" id="warningBox">
-            <div class="warning-title">占卦禁忌</div>
+            <div class="warning-title" data-i18n="warningTitle">⚠️ 占卦禁忌</div>
             <ul class="warning-list">
-                <li><strong>一问不二占：</strong>初筮告，再三渎。同一问题连续起卦，反致卦象纷乱。</li>
-                <li><strong>一日不过三：</strong>易道贵静，频占则心浮。建议一日一课，待象应后再问。</li>
-                <li><strong>生死不问卦：</strong>寿夭生死，乃天机大忌，不占。</li>
-                <li><strong>不诚不敬不占：</strong>戏谑试探、心存轻慢，神不告也。</li>
+                <li data-i18n="warning1"><strong>一问不二占：</strong>初筮告，再三渎。同一问题连续起卦，反致卦象纷乱。</li>
+                <li data-i18n="warning2"><strong>一日不过三：</strong>易道贵静，频占则心浮。建议一日一课，待象应后再问。</li>
+                <li data-i18n="warning3"><strong>生死不问卦：</strong>寿夭生死，乃天机大忌，不占。</li>
+                <li data-i18n="warning4"><strong>不诚不敬不占：</strong>戏谑试探、心存轻慢，神不告也。</li>
             </ul>
         </div>
         
         <div class="card" id="setupCard">
-            <h2 class="card-title">起卦设置</h2>
+            <h2 class="card-title" data-i18n="setupTitle">起卦设置</h2>
             <div class="setup-area">
                 <div class="form-group">
-                    <label>性别：</label>
+                    <label data-i18n="genderLabel">性别：</label>
                     <div class="gender-group">
-                        <button class="gender-btn active" data-gender="male">男士</button>
-                        <button class="gender-btn" data-gender="female">女士</button>
+                        <button class="gender-btn active" data-gender="male" data-i18n="male">男士</button>
+                        <button class="gender-btn" data-gender="female" data-i18n="female">女士</button>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="question">所占之事：</label>
-                    <input type="text" id="question" placeholder="请默念所占之事...">
+                    <label for="question" data-i18n="questionLabel">所占之事：</label>
+                    <input type="text" id="question" data-i18n-placeholder="questionPlaceholder" placeholder="请默念所占之事...">
                 </div>
-                <button id="startBtn" class="btn btn-primary">开始起卦</button>
-                <button class="btn btn-secondary" onclick="showHistoryFromHome()">占卜记录</button>
+                <button id="startBtn" class="btn btn-primary" data-i18n="startBtn">开始起卦</button>
+                <button class="btn btn-secondary" onclick="showHistoryFromHome()" data-i18n="historyBtn">占卜记录</button>
             </div>
         </div>
         
         <div id="divinationArea" class="card divination-area">
-            <h2 class="card-title">起卦过程</h2>
+            <h2 class="card-title" data-i18n="divinationTitle">起卦过程</h2>
             
             <div class="progress-bar">
                 <div class="progress-step active" id="step1">1</div>
@@ -647,23 +688,22 @@
             </div>
             
             <div class="step-indicator">
-                <div class="step-title" id="stepTitle">第一步：求上卦</div>
-                <div class="step-desc" id="stepDesc">左手滑动下方进度条，将筮竹分到左手</div>
+                <div class="step-title" id="stepTitle" data-i18n="step1Title">第一步：求上卦</div>
+                <div class="step-desc" id="stepDesc" data-i18n="step1DescMale">左手滑动下方进度条，将筮竹分到左手</div>
             </div>
             
             <div class="slider-area" id="sliderArea">
-                <!-- 当前所占之事显示（已去掉"所占之事："标签） -->
                 <div class="current-question-display" id="currentQuestionDisplay">
                     <span id="questionText"></span>
                 </div>
                 
                 <div class="split-instruction">
-                    <div style="margin-bottom: 10px; color: #c9a227; font-size: 1.1rem;">请静心默念所占之事，至诚无息时，停止滑动</div>
-                    <div style="color: #888; font-size: 0.9rem;">然后点按「至诚无息，确认分堆」</div>
+                    <div style="margin-bottom: 10px; color: #c9a227; font-size: 1.1rem;" data-i18n="instructionLine1">请静心默念所占之事，至诚无息时，停止滑动</div>
+                    <div style="color: #888; font-size: 0.9rem;" data-i18n="instructionLine2">然后点按「至诚无息，确认分堆」</div>
                 </div>
                 
                 <div id="singleSliderBox" class="single-slider-box left">
-                    <div class="single-hand-title" id="handTitle">左手</div>
+                    <div class="single-hand-title" id="handTitle" data-i18n="leftHand">左手</div>
                     <div class="slider-wrapper">
                         <div class="slider-track" id="sliderTrack">
                             <div class="slider-fill" id="sliderFill" style="width: 50%"></div>
@@ -678,13 +718,13 @@
                 </div>
                 
                 <div class="confirm-area">
-                    <button id="confirmSplitBtn" class="btn btn-primary confirm-btn">至诚无息，确认分堆</button>
+                    <button id="confirmSplitBtn" class="btn btn-primary confirm-btn" data-i18n="confirmBtn">至诚无息，确认分堆</button>
                 </div>
             </div>
             
             <div id="resultDisplay" class="result-display">
                 <div class="result-single-hand left" id="resultHandBox">
-                    <div class="result-hand-title" id="resultHandTitle">左手</div>
+                    <div class="result-hand-title" id="resultHandTitle" data-i18n="leftHand">左手</div>
                     <div class="result-hand-count" id="resultHandCount">-</div>
                 </div>
                 
@@ -693,39 +733,38 @@
             </div>
             
             <div class="next-step-area" id="nextStepArea">
-                <button id="nextStepBtn" class="btn btn-primary confirm-btn">下一步</button>
+                <button id="nextStepBtn" class="btn btn-primary confirm-btn" data-i18n="nextStep">下一步</button>
             </div>
         </div>
         
         <div id="resultArea" class="card result-area">
-            <h2 class="card-title">起卦结果</h2>
+            <h2 class="card-title" data-i18n="resultTitle">起卦结果</h2>
             
-            <!-- 新增：真太阳时显示区域 -->
             <div class="time-display-box" id="timeDisplayBox">
                 <div class="time-row">
-                    <span class="time-label">起卦时间（北京时间）：</span>
+                    <span class="time-label" data-i18n="beijingTimeLabel">起卦时间（北京时间）：</span>
                     <span class="time-value" id="beijingTime">-</span>
                 </div>
                 <div class="time-row" id="trueSolarRow" style="display: none;">
-                    <span class="time-label">真太阳时：</span>
+                    <span class="time-label" data-i18n="trueSolarLabel">真太阳时：</span>
                     <span class="time-value true-solar" id="trueSolarTime">-</span>
                 </div>
                 <div class="time-row" id="dizhiRow" style="display: none;">
-                    <span class="time-label">时辰（地支）：</span>
+                    <span class="time-label" data-i18n="dizhiLabel">时辰（地支）：</span>
                     <span class="time-value true-solar" id="dizhiTime">-</span>
                 </div>
                 <div class="location-info" id="locationInfo" style="display: none;">
-                    经度：<span id="longitudeVal">-</span>° | 
-                    修正：<span id="correctionVal">-</span>分钟
+                    <span data-i18n="longitude">经度</span>：<span id="longitudeVal">-</span>° | 
+                    <span data-i18n="correction">修正</span>：<span id="correctionVal">-</span><span data-i18n="minutes">分钟</span>
                 </div>
-                <div class="error-msg" id="locationError">
+                <div class="error-msg" id="locationError" data-i18n="locationError">
                     无法获取地理位置，使用北京时间（东经120°标准时）。如需精确真太阳时，请允许定位权限。
                 </div>
             </div>
             
             <div class="gua-display">
                 <div class="gua-box">
-                    <div class="gua-title">本卦</div>
+                    <div class="gua-title" data-i18n="primaryGua">本卦</div>
                     <div class="gua-name" id="benGuaName">-</div>
                     <div class="yao-container" id="benGuaYao"></div>
                 </div>
@@ -733,61 +772,59 @@
                 <div class="arrow">→</div>
                 
                 <div class="gua-box">
-                    <div class="gua-title">变卦</div>
+                    <div class="gua-title" data-i18n="changedGua">变卦</div>
                     <div class="gua-name" id="bianGuaName">-</div>
                     <div class="yao-container" id="bianGuaYao"></div>
                 </div>
             </div>
             
             <div class="dongyao-highlight" id="dongyaoHighlight">
-                <div class="dongyao-title">⚡ 动爻（重要性51%）</div>
+                <div class="dongyao-title" data-i18n="movingYaoTitle">⚡ 动爻（重要性51%）</div>
                 <div class="dongyao-content" id="dongyaoContent">-</div>
                 <div class="dongyao-meaning" id="dongyaoMeaning"></div>
             </div>
             
             <div class="result-info">
-                <h3>卦象解析</h3>
+                <h3 data-i18n="guaAnalysis">卦象解析</h3>
                 <p id="guaExplanation"></p>
                 <div class="method-info" id="methodInfo"></div>
             </div>
             
-            <!-- 往卦展示区域 -->
             <div id="historyArea" style="display: none; margin-top: 20px; background: rgba(0,0,0,0.2); border-radius: 10px; padding: 20px; max-height: 400px; overflow-y: auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(201, 162, 39, 0.3); padding-bottom: 10px;">
-                    <h3 style="color: #c9a227; font-size: 1.1rem;">📜 往卦</h3>
-                    <button onclick="clearAllHistory()" style="background: rgba(255, 68, 68, 0.2); border: 1px solid #ff4444; color: #ff9999; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-family: inherit; font-size: 0.85rem;">清空记录</button>
+                    <h3 style="color: #c9a227; font-size: 1.1rem;" data-i18n="historyTitle">📜 往卦</h3>
+                    <button onclick="clearAllHistory()" style="background: rgba(255, 68, 68, 0.2); border: 1px solid #ff4444; color: #ff9999; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-family: inherit; font-size: 0.85rem;" data-i18n="clearHistory">清空记录</button>
                 </div>
                 <div id="historyList"></div>
             </div>
             
             <div class="result-buttons">
-                <button id="restartBtn" class="btn btn-primary">重新起卦</button>
-                <button id="saveBtn" class="btn btn-secondary">导出结果</button>
-                <button id="historyBtn" class="btn btn-secondary" onclick="toggleHistory()">占卜记录</button>
+                <button id="restartBtn" class="btn btn-primary" data-i18n="restartBtn">重新起卦</button>
+                <button id="saveBtn" class="btn btn-secondary" data-i18n="saveBtn">导出结果</button>
+                <button id="historyBtn" class="btn btn-secondary" onclick="toggleHistory()" data-i18n="historyBtn">占卜记录</button>
             </div>
             
-            <!-- 结果页面免责声明 -->
             <div class="disclaimer">
-                <p>天机只在本地流转，不入境，不留痕，不存于云端。</p>
-                <p>问卦之人，心诚则灵，所输入之时辰心事，皆如轻烟散去，无人得见。</p>
+                <p data-i18n="disclaimer1">天机只在本地流转，不入境，不留痕，不存于云端。</p>
+                <p data-i18n="disclaimer2">问卦之人，心诚则灵，所输入之时辰心事，皆如轻烟散去，无人得见。</p>
             </div>
         </div>
         
         <div class="card" id="methodCard">
-            <h2 class="card-title">起卦方法</h2>
+            <h2 class="card-title" data-i18n="methodTitle">起卦方法</h2>
             <div class="info-text">
-                <p style="margin-bottom: 15px;"><strong>高岛易断略筮法</strong>是日本易学家高岛吞象所创的简化筮法，本程序将其数字化，让您可以在电脑上模拟传统筮竹分堆的过程。</p>
+                <p style="margin-bottom: 15px;" data-i18n="methodIntro"><strong>高岛易断略筮法</strong>是日本易学家高岛吞象所创的简化筮法，本程序将其数字化，让您可以在电脑上模拟传统筮竹分堆的过程。</p>
 
                 <div style="background: rgba(201, 162, 39, 0.05); border-left: 3px solid #c9a227; padding: 12px 15px; margin: 15px 0; border-radius: 0 8px 8px 0;">
-                    <div style="margin-bottom: 8px;"><span style="color: #c9a227; font-weight: bold;">准备阶段：</span>程序已为您准备好四十九根虚拟筮竹（大衍之数五十，其用四十有九）</div>
-                    <div style="margin-bottom: 8px;"><span style="color: #c9a227; font-weight: bold;">静心默念：</span>在输入框中填写您所占之事，静心默念，至诚无息</div>
-                    <div style="margin-bottom: 8px;"><span style="color: #c9a227; font-weight: bold;">分堆取卦：</span>滑动进度条将筮竹分到指定手中，点击「至诚无息，确认分堆」</div>
-                    <div style="margin-bottom: 8px;"><span style="color: #c9a227; font-weight: bold;">重复三次：</span>根据您的性别，按顺序分别求得上卦、下卦、动爻</div>
-                    <div><span style="color: #c9a227; font-weight: bold;">查看结果：</span>程序自动计算并显示本卦、变卦及动爻解析</div>
+                    <div style="margin-bottom: 8px;"><span style="color: #c9a227; font-weight: bold;" data-i18n="stepPrepare">准备阶段：</span><span data-i18n="stepPrepareText">程序已为您准备好四十九根虚拟筮竹（大衍之数五十，其用四十有九）</span></div>
+                    <div style="margin-bottom: 8px;"><span style="color: #c9a227; font-weight: bold;" data-i18n="stepMeditate">静心默念：</span><span data-i18n="stepMeditateText">在输入框中填写您所占之事，静心默念，至诚无息</span></div>
+                    <div style="margin-bottom: 8px;"><span style="color: #c9a227; font-weight: bold;" data-i18n="stepDivide">分堆取卦：</span><span data-i18n="stepDivideText">滑动进度条将筮竹分到指定手中，点击「至诚无息，确认分堆」</span></div>
+                    <div style="margin-bottom: 8px;"><span style="color: #c9a227; font-weight: bold;" data-i18n="stepRepeat">重复三次：</span><span data-i18n="stepRepeatText">根据您的性别，按顺序分别求得上卦、下卦、动爻</span></div>
+                    <div><span style="color: #c9a227; font-weight: bold;" data-i18n="stepView">查看结果：</span><span data-i18n="stepViewText">程序自动计算并显示本卦、变卦及动爻解析</span></div>
                 </div>
 
                 <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(201, 162, 39, 0.3);">
-                    <div style="color: #c9a227; font-weight: bold; margin-bottom: 10px;">八卦序数</div>
+                    <div style="color: #c9a227; font-weight: bold; margin-bottom: 10px;" data-i18n="baguaSequence">八卦序数</div>
                     <div style="font-family: 'Noto Serif SC', serif; line-height: 2; word-spacing: 8px;">
                         乾一 ☰　兑二 ☱　离三 ☲　震四 ☳　巽五 ☴　坎六 ☵　艮七 ☶　坤八 ☷
                     </div>
@@ -795,10 +832,9 @@
             </div>
         </div>
         
-        <!-- 首页免责声明 -->
         <div class="disclaimer" id="disclaimerBox">
-            <p>天机只在本地流转，不入境，不留痕，不存于云端。</p>
-            <p>问卦之人，心诚则灵，所输入之时辰心事，皆如轻烟散去，无人得见。</p>
+            <p data-i18n="disclaimer1">天机只在本地流转，不入境，不留痕，不存于云端。</p>
+            <p data-i18n="disclaimer2">问卦之人，心诚则灵，所输入之时辰心事，皆如轻烟散去，无人得见。</p>
         </div>
     </div>
     
@@ -806,110 +842,728 @@
     
     <script>
         // ============================================
-        // 六十四卦数据 - 标准易经编码（已完整核对）
-        // 六爻顺序（从下往上）：初爻、二爻、三爻、四爻、五爻、上爻
-        // 编码规则：字符串索引0=初爻(最下)，索引5=上爻(最上)
-        // 1=阳爻，0=阴爻
-        // 六爻编码 = 下卦三爻(初二三) + 上卦三爻(四五六)
+        // 国际化翻译数据
+        // ============================================
+        const i18n = {
+            zh: {
+                title: "高岛易断略筮法",
+                subtitle: "滑动分堆 · 诚心起卦",
+                warningTitle: "⚠️ 占卦禁忌",
+                warning1: "<strong>一问不二占：</strong>初筮告，再三渎。同一问题连续起卦，反致卦象纷乱。",
+                warning2: "<strong>一日不过三：</strong>易道贵静，频占则心浮。建议一日一课，待象应后再问。",
+                warning3: "<strong>生死不问卦：</strong>寿夭生死，乃天机大忌，不占。",
+                warning4: "<strong>不诚不敬不占：</strong>戏谑试探、心存轻慢，神不告也。",
+                setupTitle: "起卦设置",
+                genderLabel: "性别：",
+                male: "男士",
+                female: "女士",
+                questionLabel: "所占之事：",
+                questionPlaceholder: "请默念所占之事...",
+                startBtn: "开始起卦",
+                historyBtn: "占卜记录",
+                divinationTitle: "起卦过程",
+                step1Title: "第一步：求上卦",
+                step1DescMale: "左手滑动下方进度条，将筮竹分到左手",
+                step1DescFemale: "右手滑动下方进度条，将筮竹分到右手",
+                step2Title: "第二步：求下卦",
+                step2DescMale: "右手滑动下方进度条，将筮竹分到右手",
+                step2DescFemale: "左手滑动下方进度条，将筮竹分到左手",
+                step3Title: "第三步：求动爻",
+                step3DescMale: "左手滑动下方进度条，将筮竹分到左手",
+                step3DescFemale: "右手滑动下方进度条，将筮竹分到右手",
+                instructionLine1: "请静心默念所占之事，至诚无息时，停止滑动",
+                instructionLine2: "然后点按「至诚无息，确认分堆」",
+                leftHand: "左手",
+                rightHand: "右手",
+                confirmBtn: "至诚无息，确认分堆",
+                nextStep: "下一步",
+                viewResult: "查看结果",
+                resultTitle: "起卦结果",
+                beijingTimeLabel: "起卦时间（北京时间）：",
+                trueSolarLabel: "真太阳时：",
+                dizhiLabel: "时辰（地支）：",
+                longitude: "经度",
+                correction: "修正",
+                minutes: "分钟",
+                locationError: "无法获取地理位置，使用北京时间（东经120°标准时）。如需精确真太阳时，请允许定位权限。",
+                primaryGua: "本卦",
+                changedGua: "变卦",
+                movingYaoTitle: "⚡ 动爻（重要性51%）",
+                guaAnalysis: "卦象解析",
+                restartBtn: "重新起卦",
+                saveBtn: "导出结果",
+                clearHistory: "清空记录",
+                historyTitle: "📜 往卦",
+                disclaimer1: "天机只在本地流转，不入境，不留痕，不存于云端。",
+                disclaimer2: "问卦之人，心诚则灵，所输入之时辰心事，皆如轻烟散去，无人得见。",
+                methodTitle: "起卦方法",
+                methodIntro: "<strong>高岛易断略筮法</strong>是日本易学家高岛吞象所创的简化筮法，本程序将其数字化，让您可以在电脑上模拟传统筮竹分堆的过程。",
+                stepPrepare: "准备阶段：",
+                stepPrepareText: "程序已为您准备好四十九根虚拟筮竹（大衍之数五十，其用四十有九）",
+                stepMeditate: "静心默念：",
+                stepMeditateText: "在输入框中填写您所占之事，静心默念，至诚无息",
+                stepDivide: "分堆取卦：",
+                stepDivideText: "滑动进度条将筮竹分到指定手中，点击「至诚无息，确认分堆」",
+                stepRepeat: "重复三次：",
+                stepRepeatText: "根据您的性别，按顺序分别求得上卦、下卦、动爻",
+                stepView: "查看结果：",
+                stepViewText: "程序自动计算并显示本卦、变卦及动爻解析",
+                baguaSequence: "八卦序数",
+                toastDuplicate: "同一问题请勿连续起卦（再三渎）",
+                toastDeath: "禁止问生死",
+                toastUnsincere: "您未填写所占之事。心不诚不占，是否继续？",
+                toastSplitError: "请确保分堆两边都有筮竹",
+                toastSaved: "结果已保存！",
+                toastLoaded: "已加载往卦记录",
+                toastHistoryCleared: "往卦记录已清空",
+                toastNoHistory: "暂无历史记录",
+                deleteConfirm: "确定要清空所有往卦记录吗？此操作不可恢复。",
+                exportFileName: "高岛易断_",
+                resultHeader: "高岛易断略筮法起卦结果\n========================\n",
+                timeBeijing: "起卦时间（北京）：",
+                timeTrueSolar: "真太阳时：",
+                questionLabelExport: "所占之事：",
+                primaryGuaLabel: "本卦：",
+                changedGuaLabel: "变卦：",
+                movingYaoLabel: "动爻：",
+                analysisPrimary: "【本卦（重要性30—40%）卦辞解析】",
+                analysisChanged: "【变卦（重要性10—30%）（之卦）卦辞解析】",
+                analysisMoving: "【动爻（重要性51%）解析】",
+                yaoNames: ["初爻", "二爻", "三爻", "四爻", "五爻", "上爻"],
+                guaNames: ['', '乾', '兑', '离', '震', '巽', '坎', '艮', '坤']
+            },
+            en: {
+                title: "Takashima's Divination Method",
+                subtitle: "Slide to Divide · Sincere Inquiry",
+                warningTitle: "⚠️ Divination Taboos",
+                warning1: "<strong>One Question, One Reading:</strong> The I Ching responds to sincerity. Repeated questioning of the same matter confuses the hexagrams.",
+                warning2: "<strong>Three Divinations Max per Day:</strong> The Way of Change values tranquility. Frequent divination scatters the mind. One reading per day is recommended.",
+                warning3: "<strong>Never Ask About Death:</strong> Life span and death are heavenly secrets that must not be inquired.",
+                warning4: "<strong>Sincerity Required:</strong> Divination in jest or with disrespect will not receive divine guidance.",
+                setupTitle: "Divination Setup",
+                genderLabel: "Gender:",
+                male: "Male",
+                female: "Female",
+                questionLabel: "Your Inquiry:",
+                questionPlaceholder: "Silently contemplate your question...",
+                startBtn: "Begin Divination",
+                historyBtn: "History",
+                divinationTitle: "Divination Process",
+                step1Title: "Step 1: Upper Trigram",
+                step1DescMale: "Slide the bar with your LEFT hand to divide the yarrow stalks",
+                step1DescFemale: "Slide the bar with your RIGHT hand to divide the yarrow stalks",
+                step2Title: "Step 2: Lower Trigram",
+                step2DescMale: "Slide the bar with your RIGHT hand to divide the yarrow stalks",
+                step2DescFemale: "Slide the bar with your LEFT hand to divide the yarrow stalks",
+                step3Title: "Step 3: Moving Line",
+                step3DescMale: "Slide the bar with your LEFT hand to divide the yarrow stalks",
+                step3DescFemale: "Slide the bar with your RIGHT hand to divide the yarrow stalks",
+                instructionLine1: "Quietly contemplate your question. When sincerity reaches its peak, stop sliding",
+                instructionLine2: "Then press \"Confirm with Sincerity\"",
+                leftHand: "Left Hand",
+                rightHand: "Right Hand",
+                confirmBtn: "Confirm with Sincerity",
+                nextStep: "Next Step",
+                viewResult: "View Result",
+                resultTitle: "Divination Result",
+                beijingTimeLabel: "Divination Time (Beijing):",
+                trueSolarLabel: "True Solar Time:",
+                dizhiLabel: "Earthly Branch:",
+                longitude: "Longitude",
+                correction: "Correction",
+                minutes: "minutes",
+                locationError: "Location unavailable. Using Beijing Time (120°E). Enable location access for precise True Solar Time.",
+                primaryGua: "Primary Hexagram",
+                changedGua: "Changed Hexagram",
+                movingYaoTitle: "⚡ Moving Line (51% Weight)",
+                guaAnalysis: "Hexagram Analysis",
+                restartBtn: "New Divination",
+                saveBtn: "Export Result",
+                clearHistory: "Clear All",
+                historyTitle: "📜 Past Divinations",
+                disclaimer1: "The secrets of heaven flow locally only—never entering foreign domains, leaving no trace, stored in no cloud.",
+                disclaimer2: "The sincere inquirer finds spiritual response; all entered times and thoughts dissolve like mist, seen by no one.",
+                methodTitle: "Divination Method",
+                methodIntro: "<strong>Takashima's Simplified Divination</strong> is a digital adaptation of Takashima Tozo's method, allowing you to simulate the traditional yarrow stalk division on your device.",
+                stepPrepare: "Preparation:",
+                stepPrepareText: "The system prepares 49 virtual yarrow stalks (The Great Expansion Number: 50, of which 49 are used)",
+                stepMeditate: "Meditation:",
+                stepMeditateText: "Enter your inquiry in the text field. Contemplate silently with utmost sincerity until thought ceases",
+                stepDivide: "Division:",
+                stepDivideText: "Slide the bar to divide stalks into the designated hand, then press \"Confirm with Sincerity\"",
+                stepRepeat: "Repeat Three Times:",
+                stepRepeatText: "Based on gender, sequentially obtain the Upper Trigram, Lower Trigram, and Moving Line",
+                stepView: "View Result:",
+                stepViewText: "The system automatically calculates and displays the Primary Hexagram, Changed Hexagram, and Moving Line analysis",
+                baguaSequence: "Eight Trigrams Sequence",
+                toastDuplicate: "Do not repeat divination for the same question (repeated questioning profanes the sacred)",
+                toastDeath: "Questions about death are prohibited",
+                toastUnsincere: "You haven't entered an inquiry. Without sincerity, there is no divination. Continue anyway?",
+                toastSplitError: "Please ensure stalks are divided to both sides",
+                toastSaved: "Result saved!",
+                toastLoaded: "Historical record loaded",
+                toastHistoryCleared: "History cleared",
+                toastNoHistory: "No history records",
+                deleteConfirm: "Clear all historical divinations? This cannot be undone.",
+                exportFileName: "Takashima_Divination_",
+                resultHeader: "Takashima's Divination Result\n========================\n",
+                timeBeijing: "Divination Time (Beijing):",
+                timeTrueSolar: "True Solar Time:",
+                questionLabelExport: "Inquiry:",
+                primaryGuaLabel: "Primary:",
+                changedGuaLabel: "Changed:",
+                movingYaoLabel: "Moving Line:",
+                analysisPrimary: "[Primary Hexagram (30-40% Significance)]",
+                analysisChanged: "[Changed Hexagram (10-30% Significance)]",
+                analysisMoving: "[Moving Line Analysis (51% Significance)]",
+                yaoNames: ["Line 1", "Line 2", "Line 3", "Line 4", "Line 5", "Line 6"],
+                guaNames: ['', 'Qian ☰', 'Dui ☱', 'Li ☲', 'Zhen ☳', 'Xun ☴', 'Kan ☵', 'Gen ☶', 'Kun ☷']
+            }
+        };
+
+        // 当前语言
+        let currentLang = 'zh';
+
+        // 切换语言函数
+        function switchLanguage(lang) {
+            currentLang = lang;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            
+            // 更新所有带 data-i18n 的元素
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (i18n[lang][key]) {
+                    el.innerHTML = i18n[lang][key];
+                }
+            });
+            
+            // 更新占位符
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.dataset.i18nPlaceholder;
+                if (i18n[lang][key]) {
+                    el.placeholder = i18n[lang][key];
+                }
+            });
+            
+            // 更新步骤描述（根据性别）
+            updateStepDisplay();
+            
+            // 保存语言偏好
+            localStorage.setItem('divination_lang', lang);
+        }
+
+        // 获取翻译文本
+        function t(key) {
+            return i18n[currentLang][key] || key;
+        }
+
+        // 页面加载时检查语言偏好
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('divination_lang');
+            const browserLang = navigator.language.toLowerCase();
+            
+            if (savedLang) {
+                switchLanguage(savedLang);
+            } else if (browserLang.startsWith('en')) {
+                switchLanguage('en');
+            }
+        });
+
+        // ============================================
+        // 六十四卦数据 - 英文翻译版
         // ============================================
         
-        // 八卦编码（三爻，从下往上）
         const baguaCode = {
-            1: "111", // 乾：阳阳阳
-            2: "110", // 兑：阳阳阴
-            3: "101", // 离：阳阴阳
-            4: "100", // 震：阳阴阴
-            5: "011", // 巽：阴阳阳
-            6: "010", // 坎：阴阳阴
-            7: "001", // 艮：阴阴阳
-            8: "000"  // 坤：阴阴阴
+            1: "111", 2: "110", 3: "101", 4: "100", 
+            5: "011", 6: "010", 7: "001", 8: "000"
         };
         
-        const baguaName = ['', '乾', '兑', '离', '震', '巽', '坎', '艮', '坤'];
-        const yaoName = ["初爻", "二爻", "三爻", "四爻", "五爻", "上爻"];
+        const baguaName = {
+            zh: ['', '乾', '兑', '离', '震', '巽', '坎', '艮', '坤'],
+            en: ['', 'Qian ☰', 'Dui ☱', 'Li ☲', 'Zhen ☳', 'Xun ☴', 'Kan ☵', 'Gen ☶', 'Kun ☷']
+        };
         
-        // 十二时辰对应表
+        const yaoName = {
+            zh: ["初爻", "二爻", "三爻", "四爻", "五爻", "上爻"],
+            en: ["Line 1", "Line 2", "Line 3", "Line 4", "Line 5", "Line 6"]
+        };
+        
         const dizhiName = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
-        
-        // 六十四卦数据 - 来自《白话高岛易断》详细解释
-        // 六爻顺序（从下往上）：初爻、二爻、三爻、四爻、五爻、上爻
-        // 编码规则：字符串索引0=初爻(最下)，索引5=上爻(最上)
-        // 1=阳爻，0=阴爻
+
+        // 六十四卦双语数据
         const guaData = {
-            "111111": { name: "乾为天", explanation: "乾卦纯阳至健，天之象也。元亨利贞四德：元为仁之原，亨为礼之和，利为义之和，贞为智之正。占得此卦，万事亨通，示人效法天德，自强不息。刚健中正，纯粹精也。君子法天健行，功德完备则获吉祥。问事利刚健进取，不可懈怠。" },
-            "110111": { name: "天泽履", explanation: "履卦象为履行礼仪，兑泽遇乾刚。卦辞'履虎尾不咥人亨'，踩虎尾而不被咬，行事谨慎则吉祥。辨上下定民志，礼之用和为贵。君子体履，行己敬而与人诚。问事宜脚踏实地，谨慎行事，不可冒进。" },
-            "101111": { name: "天火同人", explanation: "同人卦象征会同同心，离火上照。'同人于野亨，利涉大川'。会同之道贵在正大，以文德感化天下。伏戎于莽、乘其墉者弗克攻而吉，争讼则凶。问事利与人合作，共谋发展。" },
-            "100111": { name: "天雷无妄", explanation: "无妄卦象真实自然，震雷上动。'元亨利贞，其匪正有眚'，天下雷行，万物皆惊，真实不虚也。妄言祸至，无妄则福随。问事宜真诚待人，不可妄为，自有吉祥。" },
-            "011111": { name: "天风姤", explanation: "姤卦象征不期而遇，乾刚遇巽柔。'姤女壮勿用取女'，阴遇阳也，天地相遇品物咸章。鱼沉于渊，五行之类。问事有意外机遇，人际关系变化。宜谨慎防微杜渐。" },
-            "010111": { name: "天水讼", explanation: "讼卦象征争讼诉讼，坎险遇乾刚。'讼有孚窒惕，中吉终凶'，健而险也。天与水违行，酿成讼端。问事宜和解，诉讼则凶。君子做事谋始，防患于未然。" },
-            "001111": { name: "天山遁", explanation: "遁卦象征退避隐退，艮山遇乾天。'遁亨小利贞'，天下有山，渐离之象。遯退之时，宜静不宜动，识时务者为俊杰。问事时机不利，宜退守待机。君子以远小人，不恶而严。" },
-            "000111": { name: "天地否", explanation: "否卦象征闭塞不通，坤阴下凝。'否之匪人不利君子贞，大往小来'。天气上升，地气下沉，阴阳不交。问事阻隔不顺，宜守正待时。小人道长，君子道消，闭塞之象。" },
-            "111110": { name: "泽天夬", explanation: "夬卦象征决断清除，乾刚决兑柔。'夬扬于王庭，孚号有厉'，刚决柔也，健而说决而和。泽上于天，决之将出。问事需果断决策，清除障碍。利有攸往，终有凶也。" },
-            "110110": { name: "兑为泽", explanation: "兑卦象征和悦喜悦，泽水相重。'兑亨利贞'，刚中而柔外，说以利贞。兑为少女，柔和外悦，朋友讲习互相滋益。问事人际关系和谐，心情愉悦。" },
-            "101110": { name: "泽火革", explanation: "革卦象征变革除旧，离火焚兑泽。'革己日乃孚，元亨利贞悔亡'。革去故而鼎取新，天地革而四时成，汤武革命顺天应人。问事需改革创新，破旧立新。" },
-            "100110": { name: "泽雷随", explanation: "随卦象征随顺时势，震雷从兑悦。'随元亨利贞无咎'，泽中有雷，君子以向晦入宴息。随之道在随时，官有渝从正吉，出门交有功。问事宜顺应时势，不可固执。" },
-            "011110": { name: "泽风大过", explanation: "大过卦象征重大越轨，巽风入兑泽。'大过栋桡，利有攸往亨'。泽灭木，栋不可不刚。独立不惧，遁世无闷。问事有重大变化，需谨慎果断，可成大业。" },
-            "010110": { name: "泽水困", explanation: "困卦象征困穷艰难，坎水入兑泽。'困亨贞大人吉无咎'，困而不失其所亨，穷则变通。困于石、据于蒺藜，入宫不见妻皆凶。问事处于困境，需坚持忍耐。" },
-            "001110": { name: "泽山咸", explanation: "咸卦象征相互感应，艮少男悦兑少女。'咸亨利贞取女吉'，柔上而刚下，二气感应以相与。咸主感应，感而遂通。君子以虚受人。问事人际关系良好，感情融洽。" },
-            "000110": { name: "泽地萃", explanation: "萃卦象征聚集聚合，坤地承兑泽。'萃王假有庙，利见大人亨'。聚以正者吉，逆命者凶。萃如嗟如无攸利。问事人缘聚合，宜合作共事。" },
-            "111101": { name: "火天大有", explanation: "大有卦象征丰盛富有，乾刚照离光。'大有元亨'，柔得尊位大中上下应之，富有之谓大业，日新之谓盛德。问事运势亨通，收获丰硕。" },
-            "110101": { name: "火泽睽", explanation: "睽卦象征乖离不合，离火焚兑泽。'睽小事吉'，异中同也，同中有睽。遇主于巷无咎。问事人际关系有隔阂，需沟通调和。" },
-            "101101": { name: "离为火", explanation: "离卦象征光明依附，离火相重。'离利贞亨畜牝牛吉'，火体虚而形丽，万物皆相见。问事前途光明，但需有所依附。柔顺中正则吉。" },
-            "100101": { name: "火雷噬嗑", explanation: "噬嗑卦象征决断执行，离电遇震雷。'噬嗑亨，利用狱'，颐中有物曰噬嗑。刚柔分动而明，雷电合而章。问事需果断处理事务，除障碍。" },
-            "011101": { name: "火风鼎", explanation: "鼎卦象征革新稳定，离火入巽风。'鼎元吉亨'，鼎象也，革故鼎新，鼎养神明。问事事业稳固，宜改革创新。" },
-            "010101": { name: "火水未济", explanation: "未济卦象征事未成功，离火上浮。'未济亨，柔得中也'，小狐汔济未出中。问事需继续努力，终有成之机。思患豫防。" },
-            "001101": { name: "火山旅", explanation: "旅卦象征行旅漂泊，离火照艮山。'旅小亨旅贞吉'，旅之时义大矣哉，慎用刑而不用狱。问事有变动之象，宜外出发展。" },
-            "000101": { name: "火地晋", explanation: "晋卦象征晋升进步，离明照坤地。'晋康侯用锡马蕃庶，昼日三接'。明出地上，顺而丽乎大明。问事事业将有进展，宜积极进取。" },
-            "111100": { name: "雷天大壮", explanation: "大壮卦象征强大盛壮，震雷上鸣。'大壮利贞，大者壮也'，刚以动故壮，雷在天上。问事力量强大，但需谨慎。壮于趾者凶。" },
-            "110100": { name: "雷泽归妹", explanation: "归妹卦象征婚配归宿，兑少女从震长男。'归妹征凶无攸利'，天地之大义，天地不交则万物不兴。问事将有归宿，宜顺其自然。" },
-            "101100": { name: "雷火丰", explanation: "丰卦象征丰盛繁荣，震雷遇离火。'丰亨，王假之勿忧宜日中'，丰大也，宜照天下。问事事业繁荣，运势亨通。" },
-            "100100": { name: "震为雷", explanation: "震卦象征震动惊惧，震雷相重。'震亨，震来虩虩笑言哑哑'，震惊百里惊远惧迩。问事会有变动或惊动，但终能吉祥。" },
-            "011100": { name: "雷风恒", explanation: "恒卦象征恒久稳定，巽风从震雷。'恒亨无咎，利贞利有攸往'，刚上柔下雷风恒。问事宜持之以恒，坚持不懈。" },
-            "010100": { name: "雷水解", explanation: "解卦象征解除困难，坎险遇震雷。'解利西南无所往，其来复吉'，雷雨作解，险难消散。问事困难将解除，运势好转。" },
-            "001100": { name: "雷山小过", explanation: "小过卦象征小有过越，艮山止震雷。'小过亨利贞，可小事不可大事'。飞鸟遗之音，不宜上宜下。问事有小波折，但无大碍。" },
-            "000100": { name: "雷地豫", explanation: "豫卦象征愉悦安乐，坤地从震雷。'豫利建侯行师'，雷出地奋，先王以作乐。问事心情愉悦，宜做好准备。" },
-            "111011": { name: "风天小畜", explanation: "小畜卦象征小有蓄积，巽风畜乾刚。'小畜亨，密云不雨自我西郊'。问事小有收获，宜继续积累。君子以懿文德。" },
-            "110011": { name: "风泽中孚", explanation: "中孚卦象征诚信忠实，兑泽上有巽风。'中孚豚鱼吉，利涉大川利贞'。诚信为本，感而遂通。问事以诚信为本，可得信任。" },
-            "101011": { name: "风火家人", explanation: "家人卦象征家庭和睦，离火出于巽风。'家人有严君焉，父母之谓也'。父父子子兄兄弟弟夫夫妇妇而家道正。问事家庭关系和谐，宜重视家庭。" },
-            "100011": { name: "风雷益", explanation: "益卦象征增益受益，震雷加于巽风。'益利有攸往，利涉大川'，风雷益，损益盈虚与时皆行。问事将有收益，宜积极进取。" },
-            "011011": { name: "巽为风", explanation: "巽卦象征顺从进入，巽风相重。'巽小亨，利有攸往利见大人'，随风巽君子以申命行事。问事宜柔顺行事，循序渐进。" },
-            "010011": { name: "风水涣", explanation: "涣卦象征涣散化解，坎水入巽风。'涣亨，王假有庙利涉大川'。问事困难将化解，前景好转。聚者散之，涣者聚之。" },
-            "001011": { name: "风山渐", explanation: "渐卦象征循序渐进，艮山止巽风。'渐女归吉利贞'，渐进也，进以正可以正邦。问事宜循序渐进，不可急躁。" },
-            "000011": { name: "风地观", explanation: "观卦象征观察审视，坤地从巽风。'观盥而不荐，有孚颙若'。神道设教，圣人以神道设教而天下服。问事需冷静观察形势，不可轻举妄动。" },
-            "111010": { name: "水天需", explanation: "需卦象征等待需求，乾刚遇坎险。'需有孚光亨贞吉，利涉大川'。需于郊不犯难，需于沙容民畜众。问事需耐心等待，不可急躁。" },
-            "110010": { name: "水泽节", explanation: "节卦象征节制适度，兑泽下临坎水。'节亨，苦节不可贞'，节以制度不伤财不害民。问事宜节制行事，不可过度。" },
-            "101010": { name: "水火既济", explanation: "既济卦象征事已成功，离火上照坎水。'既济亨，小利贞初吉终乱'。成功之后戒慎恐惧，思患豫防方保终吉。" },
-            "100010": { name: "水雷屯", explanation: "屯卦象征艰难初创，震雷动于坎险。'屯元亨利贞，勿用有攸往利建侯'。万事开头难，云雷屯皆窒塞难通。问事事业初创，困难重重但前景光明。" },
-            "011010": { name: "水风井", explanation: "井卦象征汲养不变，巽木入坎水。'井改邑不改井，无丧无得'，井养而不穷。问事基础稳固，宜守成。" },
-            "010010": { name: "坎为水", explanation: "坎卦象征险陷困难，坎水相重。'习坎有孚维心亨，行有尚'，水流而不盈行险而不失其信。问事正处于困难时期，需要谨慎。" },
-            "001010": { name: "水山蹇", explanation: "蹇卦象征艰难险阻，艮山阻坎水。'蹇利西南不利东北'，见险而能止知矣哉。问事前行受阻，需要谨慎。" },
-            "000010": { name: "水地比", explanation: "比卦象征亲近团结，坤地从坎水。'比吉，原筮元永贞，不宁方来'。比以辅为主，先迷后得主。问事宜与人亲近，团结合作。" },
-            "111001": { name: "山天大畜", explanation: "大畜卦象征大积蓄聚，乾刚畜于艮山。'大畜利贞，不家食吉利涉大川'。刚健笃实辉光，日新其德。问事积蓄丰厚，宜待机而动。" },
-            "110001": { name: "山泽损", explanation: "损卦象征减损付出，兑泽入艮山。'损而有孚元亨利贞'，损下益上其道上行。问事需有所付出，但终有回报。" },
-            "101001": { name: "山火贲", explanation: "贲卦象征文饰美化，离火照艮山。'贲亨小利有攸往'，文明以止人文也。问事宜注重外表，但不可过分。" },
-            "100001": { name: "山雷颐", explanation: "颐卦象征颐养修养，震雷动于艮山。'颐贞吉，养正则吉'。天地养万物，圣人养贤以及万民。问事宜注重修养，保重身体。" },
-            "011001": { name: "山风蛊", explanation: "蛊卦象征积弊改革，巽风入艮山。'蛊元亨利涉大川，先甲三日后甲三日'。蛊因人兴必有所以蛊。问事需革除积弊，改革创新。" },
-            "010001": { name: "山水蒙", explanation: "蒙卦象征蒙昧启蒙，坎水浸艮山。'蒙亨，匪我求童蒙童蒙求我'。蒙以养正圣功也。问事需学习求教，启蒙之时。" },
-            "001001": { name: "艮为山", explanation: "艮卦象征静止停止，艮山相重。'艮其背不获其身，行其庭不见其人'。止于所当止，动静不失其时。问事宜停止不前，等待时机。" },
-            "000001": { name: "山地剥", explanation: "剥卦象征剥落衰败，坤地承艮山。'剥不利有攸往'，剥以辨幽明消不可不盈。问事运势下滑，宜保守谨慎。" },
-            "111000": { name: "地天泰", explanation: "泰卦象征通泰和谐，乾天交坤地。'小往大来吉亨'，天地交泰。泰之时义大矣哉，吉在交济。问事运势亨通，万事如意。" },
-            "110000": { name: "地泽临", explanation: "临卦象征监临督导，兑泽临坤地。'临元亨利贞，至于八月有凶'。以大临小以刚临柔。问事机会来临，宜积极把握。" },
-            "101000": { name: "地火明夷", explanation: "明夷卦象征光明受伤，离火入坤地。'明夷利艰贞'，明入地中伤则晦，晦则忧忧则用晦而明。问事暂时受挫，需要忍耐。" },
-            "100000": { name: "地雷复", explanation: "复卦象征回复复兴，震雷出于坤地。'复亨，七日来复'，反复其道天行也。复见天地之心。问事运势将转好，宜把握时机。" },
-            "011000": { name: "地风升", explanation: "升卦象征上升发展，巽风入坤地。'升元亨，用见大人勿恤，南征吉'。问事事业上升，前景光明。" },
-            "010000": { name: "地水师", explanation: "师卦象征兵众竞争，坎水浸坤地。'师贞丈人吉无咎'，师或舆尸贞凶。行险而顺养兵以正。问事竞争激烈，需要策略。" },
-            "001000": { name: "地山谦", explanation: "谦卦象征谦虚谦让，艮山在于坤地。'谦亨君子有终'，谦谦君子卑以自牧。劳谦君子万民服也。问事谦虚谨慎会带来好运。" },
-            "000000": { name: "坤为地", explanation: "坤卦象征柔顺包容，坤地纯阴。'坤元亨利牝马之贞'，柔顺成乾，坤以简能。厚德载物，中正广生。问事宜柔顺行事，厚德待人。" }
+            "111111": { 
+                name: { zh: "乾为天", en: "The Creative (Qian)" }, 
+                explanation: { 
+                    zh: "乾卦纯阳至健，天之象也。元亨利贞四德：元为仁之原，亨为礼之和，利为义之和，贞为智之正。占得此卦，万事亨通，示人效法天德，自强不息。刚健中正，纯粹精也。君子法天健行，功德完备则获吉祥。问事利刚健进取，不可懈怠。",
+                    en: "Pure Yang, the strongest. The four virtues: Yuan (origination), Heng (success), Li (benefit), Zhen (perseverance). This hexagram indicates supreme success through vigorous, ceaseless effort. The superior person models themselves on Heaven's movement, striving without rest. Benefits come through persistent, righteous action."
+                } 
+            },
+            "110111": { 
+                name: { zh: "天泽履", en: "Treading (Lu)" }, 
+                explanation: { 
+                    zh: "履卦象为履行礼仪，兑泽遇乾刚。卦辞'履虎尾不咥人亨'，踩虎尾而不被咬，行事谨慎则吉祥。辨上下定民志，礼之用和为贵。君子体履，行己敬而与人诚。问事宜脚踏实地，谨慎行事，不可冒进。",
+                    en: "Treading upon the tiger's tail without being bitten—success through proper conduct. This hexagram emphasizes careful, respectful behavior in all relationships. The superior person distinguishes high and low, establishing proper order. Progress comes through courtesy and caution, not recklessness."
+                } 
+            },
+            "101111": { 
+                name: { zh: "天火同人", en: "Fellowship (Tong Ren)" }, 
+                explanation: { 
+                    zh: "同人卦象征会同同心，离火上照。'同人于野亨，利涉大川'。会同之道贵在正大，以文德感化天下。伏戎于莽、乘其墉者弗克攻而吉，争讼则凶。问事利与人合作，共谋发展。",
+                    en: "Fellowship with others in the open—success, beneficial to cross great waters. This hexagram represents union and cooperation among people. Success comes through openness, shared purpose, and cultural influence. Competition and conflict lead to misfortune; cooperation brings benefit."
+                } 
+            },
+            "100111": { 
+                name: { zh: "天雷无妄", en: "Innocence (Wu Wang)" }, 
+                explanation: { 
+                    zh: "无妄卦象真实自然，震雷上动。'元亨利贞，其匪正有眚'，天下雷行，万物皆惊，真实不虚也。妄言祸至，无妄则福随。问事宜真诚待人，不可妄为，自有吉祥。",
+                    en: "Without falsehood—supreme success. Thunder moves under Heaven, startling all things into authenticity. Success comes through sincerity and natural action. Deception or calculated manipulation brings calamity. Remain true to your nature and circumstances will align favorably."
+                } 
+            },
+            "011111": { 
+                name: { zh: "天风姤", en: "Coming to Meet (Gou)" }, 
+                explanation: { 
+                    zh: "姤卦象征不期而遇，乾刚遇巽柔。'姤女壮勿用取女'，阴遇阳也，天地相遇品物咸章。鱼沉于渊，五行之类。问事有意外机遇，人际关系变化。宜谨慎防微杜渐。",
+                    en: "Coming to meet—unexpected encounters. The strong meets the yielding. This hexagram warns of chance meetings that may lead to complications, particularly in relationships. While opportunities arise unexpectedly, caution is advised—inspect carefully before committing."
+                } 
+            },
+            "010111": { 
+                name: { zh: "天水讼", en: "Conflict (Song)" }, 
+                explanation: { 
+                    zh: "讼卦象征争讼诉讼，坎险遇乾刚。'讼有孚窒惕，中吉终凶'，健而险也。天与水违行，酿成讼端。问事宜和解，诉讼则凶。君子做事谋始，防患于未然。",
+                    en: "Conflict—there is sincerity but it is blocked. Caution brings good fortune in the middle, misfortune at the end. Heaven and water move in opposite directions, creating friction. This hexagram advises settling disputes through mediation rather than litigation. The superior person plans ahead to prevent conflict."
+                } 
+            },
+            "001111": { 
+                name: { zh: "天山遁", en: "Retreat (Dun)" }, 
+                explanation: { 
+                    zh: "遁卦象征退避隐退，艮山遇乾天。'遁亨小利贞'，天下有山，渐离之象。遯退之时，宜静不宜动，识时务者为俊杰。问事时机不利，宜退守待机。君子以远小人，不恶而严。",
+                    en: "Retreat—success through timely withdrawal. Heaven above the mountain, gradually distancing. This hexagram indicates a time when withdrawal is wiser than advance. The wise person recognizes when conditions are unfavorable and maintains dignity while creating distance from negative influences."
+                } 
+            },
+            "000111": { 
+                name: { zh: "天地否", en: "Stagnation (Pi)" }, 
+                explanation: { 
+                    zh: "否卦象征闭塞不通，坤阴下凝。'否之匪人不利君子贞，大往小来'。天气上升，地气下沉，阴阳不交。问事阻隔不顺，宜守正待时。小人道长，君子道消，闭塞之象。",
+                    en: "Stagnation—Heaven and Earth do not unite. The creative energy rises, the receptive sinks, creating separation. This hexagram indicates a period when the way of the inferior person prevails and the superior person's way withdraws. Stand firm and wait—the stagnation will eventually transform."
+                } 
+            },
+            "111110": { 
+                name: { zh: "泽天夬", en: "Break-through (Guai)" }, 
+                explanation: { 
+                    zh: "夬卦象征决断清除，乾刚决兑柔。'夬扬于王庭，孚号有厉'，刚决柔也，健而说决而和。泽上于天，决之将出。问事需果断决策，清除障碍。利有攸往，终有凶也。",
+                    en: "Break-through—resolutely bringing the matter before the court. The lake rises to Heaven, about to break through. This hexagram represents the need for decisive action to remove obstacles. While determination brings progress, be mindful that excessive force may lead to future difficulties."
+                } 
+            },
+            "110110": { 
+                name: { zh: "兑为泽", en: "The Joyous (Dui)" }, 
+                explanation: { 
+                    zh: "兑卦象征和悦喜悦，泽水相重。'兑亨利贞'，刚中而柔外，说以利贞。兑为少女，柔和外悦，朋友讲习互相滋益。问事人际关系和谐，心情愉悦。",
+                    en: "The Joyous—success through sincere joy. The lake doubles itself, reflecting and multiplying happiness. This hexagram indicates benefits through open, cheerful communication and mutual learning among friends. Joy based on proper principles brings lasting benefit."
+                } 
+            },
+            "101110": { 
+                name: { zh: "泽火革", en: "Revolution (Ge)" }, 
+                explanation: { 
+                    zh: "革卦象征变革除旧，离火焚兑泽。'革己日乃孚，元亨利贞悔亡'。革去故而鼎取新，天地革而四时成，汤武革命顺天应人。问事需改革创新，破旧立新。",
+                    en: "Revolution—transformation occurs when the old is exhausted. Fire in the lake brings change. Just as Heaven and Earth create the four seasons through change, human affairs require periodic renewal. Success comes through timely transformation that responds to genuine need, not forced change."
+                } 
+            },
+            "100110": { 
+                name: { zh: "泽雷随", en: "Following (Sui)" }, 
+                explanation: { 
+                    zh: "随卦象征随顺时势，震雷从兑悦。'随元亨利贞无咎'，泽中有雷，君子以向晦入宴息。随之道在随时，官有渝从正吉，出门交有功。问事宜顺应时势，不可固执。",
+                    en: "Following—supreme success through adaptation. Thunder in the lake indicates following natural rhythms. The wise person follows the time, resting when it is dark and acting when it is light. Success comes through flexibility and harmonious adaptation to circumstances, not rigid adherence to plans."
+                } 
+            },
+            "011110": { 
+                name: { zh: "泽风大过", en: "Preponderance of the Great (Da Guo)" }, 
+                explanation: { 
+                    zh: "大过卦象征重大越轨，巽风入兑泽。'大过栋桡，利有攸往亨'。泽灭木，栋不可不刚。独立不惧，遁世无闷。问事有重大变化，需谨慎果断，可成大业。",
+                    en: "Preponderance of the Great—the ridgepole sags under excessive weight. The lake overflows the wood. This hexagram indicates a situation of extraordinary pressure requiring extraordinary measures. While the challenge is great, careful, bold action can accomplish significant results. Stand independent but not isolated."
+                } 
+            },
+            "010110": { 
+                name: { zh: "泽水困", en: "Oppression (Kun)" }, 
+                explanation: { 
+                    zh: "困卦象征困穷艰难，坎水入兑泽。'困亨贞大人吉无咎'，困而不失其所亨，穷则变通。困于石、据于蒺藜，入宫不见妻皆凶。问事处于困境，需坚持忍耐。",
+                    en: "Oppression—success through perseverance. The water sinks into the marsh,被困. This hexagram represents hardship and constraint. While the situation is difficult, the superior person preserves their character and finds ways to persevere. Oppression ultimately transforms when one maintains integrity."
+                } 
+            },
+            "001110": { 
+                name: { zh: "泽山咸", en: "Influence (Xian)" }, 
+                explanation: { 
+                    zh: "咸卦象征相互感应，艮少男悦兑少女。'咸亨利贞取女吉'，柔上而刚下，二气感应以相与。咸主感应，感而遂通。君子以虚受人。问事人际关系良好，感情融洽。",
+                    en: "Influence—pervasive, penetrating influence brings success. The mountain is receptive to the lake, creating mutual resonance. This hexagram indicates successful relationships based on genuine attraction and open receptivity. The superior person allows themselves to be influenced, remaining open and empty to receive."
+                } 
+            },
+            "000110": { 
+                name: { zh: "泽地萃", en: "Gathering Together (Cui)" }, 
+                explanation: { 
+                    zh: "萃卦象征聚集聚合，坤地承兑泽。'萃王假有庙，利见大人亨'。聚以正者吉，逆命者凶。萃如嗟如无攸利。问事人缘聚合，宜合作共事。",
+                    en: "Gathering Together—success through assembly. The Earth receives the lake, collecting waters. This hexagram indicates benefits that come through rightful assembly and congregation. The king approaches the temple—proper gathering around a center of value brings benefit through meeting with great persons."
+                } 
+            },
+            "111101": { 
+                name: { zh: "火天大有", en: "Possession in Great Measure (Da You)" }, 
+                explanation: { 
+                    zh: "大有卦象征丰盛富有，乾刚照离光。'大有元亨'，柔得尊位大中上下应之，富有之谓大业，日新之谓盛德。问事运势亨通，收获丰硕。",
+                    en: "Possession in Great Measure—supreme success. Fire in Heaven shines far and wide. This hexagram indicates abundant resources and the wise management of great possessions. Success comes through holding a central position while remaining open and responsive to those above and below."
+                } 
+            },
+            "110101": { 
+                name: { zh: "火泽睽", en: "Opposition (Kui)" }, 
+                explanation: { 
+                    zh: "睽卦象征乖离不合，离火焚兑泽。'睽小事吉'，异中同也，同中有睽。遇主于巷无咎。问事人际关系有隔阂，需沟通调和。",
+                    en: "Opposition—small matters bring success. Fire moves away from the lake, creating separation. This hexagram indicates a time of divergence and misunderstanding. While differences exist, finding common ground in small things leads to good fortune. Meeting the leader in the byway is not a mistake."
+                } 
+            },
+            "101101": { 
+                name: { zh: "离为火", en: "The Clinging (Li)" }, 
+                explanation: { 
+                    zh: "离卦象征光明依附，离火相重。'离利贞亨畜牝牛吉'，火体虚而形丽，万物皆相见。问事前途光明，但需有所依附。柔顺中正则吉。",
+                    en: "The Clinging—success through perseverance and attachment. Fire doubles itself, illuminating all things. This hexagram indicates dependence and attachment, like fire clinging to fuel. Success requires proper attachment—to principles, to wise leaders, to what nourishes. Cultivate the receptive, yielding strength of the cow."
+                } 
+            },
+            "100101": { 
+                name: { zh: "火雷噬嗑", en: "Biting Through (Shi He)" }, 
+                explanation: { 
+                    zh: "噬嗑卦象征决断执行，离电遇震雷。'噬嗑亨，利用狱'，颐中有物曰噬嗑。刚柔分动而明，雷电合而章。问事需果断处理事务，除障碍。",
+                    en: "Biting Through—success through decisive enforcement. Lightning and thunder unite to illuminate and move. This hexagram represents the need to remove obstacles through decisive action, like biting through tough material. Proper legal or disciplinary measures bring success in removing hindrances."
+                } 
+            },
+            "011101": { 
+                name: { zh: "火风鼎", en: "The Cauldron (Ding)" }, 
+                explanation: { 
+                    zh: "鼎卦象征革新稳定，离火入巽风。'鼎元吉亨'，鼎象也，革故鼎新，鼎养神明。问事事业稳固，宜改革创新。",
+                    en: "The Cauldron—supreme good fortune. Fire enters the wood, cooking and transforming. This hexagram represents stability that contains transformation, like an ancient vessel used for sacred cooking. Nourishing the wise brings fundamental good fortune. A time for innovation within established structures."
+                } 
+            },
+            "010101": { 
+                name: { zh: "火水未济", en: "Before Completion (Wei Ji)" }, 
+                explanation: { 
+                    zh: "未济卦象征事未成功，离火上浮。'未济亨，柔得中也'，小狐汔济未出中。问事需继续努力，终有成之机。思患豫防。",
+                    en: "Before Completion—success through continued effort. Fire rises over water, not yet completing its work. This hexagram indicates a time when the goal is in sight but not yet reached. Success comes through maintaining care and foresight to the very end, preventing complacency before completion."
+                } 
+            },
+            "001101": { 
+                name: { zh: "火山旅", en: "The Wanderer (Lu)" }, 
+                explanation: { 
+                    zh: "旅卦象征行旅漂泊，离火照艮山。'旅小亨旅贞吉'，旅之时义大矣哉，慎用刑而不用狱。问事有变动之象，宜外出发展。",
+                    en: "The Wanderer—small success through perseverance. Fire on the mountain illuminates but does not remain. This hexagram indicates a time of being a stranger in strange lands. Success comes through maintaining correct behavior, careful use of resources, and respect for local customs while traveling or in transition."
+                } 
+            },
+            "000101": { 
+                name: { zh: "火地晋", en: "Progress (Jin)" }, 
+                explanation: { 
+                    zh: "晋卦象征晋升进步，离明照坤地。'晋康侯用锡马蕃庶，昼日三接'。明出地上，顺而丽乎大明。问事事业将有进展，宜积极进取。",
+                    en: "Progress—success through advancement. The sun rises over the Earth, illuminating all. This hexagram indicates a time of rapid progress and recognition. The wise person is honored and rewarded multiple times. Success comes through clarifying and illuminating matters while maintaining harmonious relations."
+                } 
+            },
+            "111100": { 
+                name: { zh: "雷天大壮", en: "The Power of the Great (Da Zhuang)" }, 
+                explanation: { 
+                    zh: "大壮卦象征强大盛壮，震雷上鸣。'大壮利贞，大者壮也'，刚以动故壮，雷在天上。问事力量强大，但需谨慎。壮于趾者凶。",
+                    en: "The Power of the Great—perseverance brings fortune. Thunder in Heaven, powerful and moving. This hexagram indicates great strength and energy, but warns against using force improperly. Power without wisdom leads to misfortune. Restrain the impulse to forcefully advance; true power requires proper timing."
+                } 
+            },
+            "110100": { 
+                name: { zh: "雷泽归妹", en: "The Marrying Maiden (Gui Mei)" }, 
+                explanation: { 
+                    zh: "归妹卦象征婚配归宿，兑少女从震长男。'归妹征凶无攸利'，天地之大义，天地不交则万物不兴。问事将有归宿，宜顺其自然。",
+                    en: "The Marrying Maiden—undertakings bring misfortune. Thunder over the lake—movement following joy. This hexagram indicates relationships or situations where the proper order is reversed or inappropriate. While unions occur, they may not be fully harmonious. Accept natural outcomes without forcing perfect arrangements."
+                } 
+            },
+            "101100": { 
+                name: { zh: "雷火丰", en: "Abundance (Feng)" }, 
+                explanation: { 
+                    zh: "丰卦象征丰盛繁荣，震雷遇离火。'丰亨，王假之勿忧宜日中'，丰大也，宜照天下。问事事业繁荣，运势亨通。",
+                    en: "Abundance—supreme success. Thunder and lightning unite, creating great illumination. This hexagram indicates a time of fullness and prosperity when clarity and action unite. Do not worry—maintain this peak period like the sun at noon. Prepare for the natural cycle of decrease that follows abundance."
+                } 
+            },
+            "100100": { 
+                name: { zh: "震为雷", en: "The Arousing (Zhen)" }, 
+                explanation: { 
+                    zh: "震卦象征震动惊惧，震雷相重。'震亨，震来虩虩笑言哑哑'，震惊百里惊远惧迩。问事会有变动或惊动，但终能吉祥。",
+                    en: "The Arousing—success through shock and movement. Thunder doubles itself, startling all within a hundred miles. This hexagram indicates sudden change or shock that initially brings fear but ultimately leads to laughter and success. Maintain equanimity during upheavals; they awaken new possibilities."
+                } 
+            },
+            "011100": { 
+                name: { zh: "雷风恒", en: "Duration (Heng)" }, 
+                explanation: { 
+                    zh: "恒卦象征恒久稳定，巽风从震雷。'恒亨无咎，利贞利有攸往'，刚上柔下雷风恒。问事宜持之以恒，坚持不懈。",
+                    en: "Duration—success without blame through perseverance. Thunder and wind create lasting movement. This hexagram indicates the power of persistence and stable habits. Success comes through consistency, not sudden effort. Proper relationships are based on lasting principles that endure through all changes."
+                } 
+            },
+            "010100": { 
+                name: { zh: "雷水解", en: "Deliverance (Xie)" }, 
+                explanation: { 
+                    zh: "解卦象征解除困难，坎险遇震雷。'解利西南无所往，其来复吉'，雷雨作解，险难消散。问事困难将解除，运势好转。",
+                    en: "Deliverance—benefit in the southwest; returning brings good fortune. Thunder and rain disperse difficulties. This hexagram indicates a time when obstacles are removed and dangers dissolve. Action is now appropriate to clear remaining debris from past difficulties. The Way opens again."
+                } 
+            },
+            "001100": { 
+                name: { zh: "雷山小过", en: "Preponderance of the Small (Xiao Guo)" }, 
+                explanation: { 
+                    zh: "小过卦象征小有过越，艮山止震雷。'小过亨利贞，可小事不可大事'。飞鸟遗之音，不宜上宜下。问事有小波折，但无大碍。",
+                    en: "Preponderance of the Small—success through humility in small matters. Thunder on the mountain—small excess. This hexagram advises attending to small things while avoiding great undertakings. Like a bird in flight leaving its call, do not try to soar too high. Success comes through modest aims and attention to detail."
+                } 
+            },
+            "000100": { 
+                name: { zh: "雷地豫", en: "Enthusiasm (Yu)" }, 
+                explanation: { 
+                    zh: "豫卦象征愉悦安乐，坤地从震雷。'豫利建侯行师'，雷出地奋，先王以作乐。问事心情愉悦，宜做好准备。",
+                    en: "Enthusiasm—benefit through preparation and leadership. Thunder emerges from the Earth, energizing all things. This hexagram indicates a time of joy and enthusiasm that supports productive action. The ancient kings used music to honor virtue. Proper preparation and timing lead to success."
+                } 
+            },
+            "111011": { 
+                name: { zh: "风天小畜", en: "The Taming Power of the Small (Xiao Chu)" }, 
+                explanation: { 
+                    zh: "小畜卦象征小有蓄积，巽风畜乾刚。'小畜亨，密云不雨自我西郊'。问事小有收获，宜继续积累。君子以懿文德。",
+                    en: "The Taming Power of the Small—success through accumulation. Wind across Heaven gathers clouds but does not yet rain. This hexagram indicates a time of small gains and gradual accumulation. The superior person cultivates literary virtue while waiting for the proper time to act."
+                } 
+            },
+            "110011": { 
+                name: { zh: "风泽中孚", en: "Inner Truth (Zhong Fu)" }, 
+                explanation: { 
+                    zh: "中孚卦象征诚信忠实，兑泽上有巽风。'中孚豚鱼吉，利涉大川利贞'。诚信为本，感而遂通。问事以诚信为本，可得信任。",
+                    en: "Inner Truth—success through sincerity. Wind over the lake penetrates everywhere. This hexagram indicates the power of genuine, heartfelt truth that can even affect fish and pigs. Sincerity creates the conditions for crossing great waters. Trust and openness bring lasting benefit."
+                } 
+            },
+            "101011": { 
+                name: { zh: "风火家人", en: "The Family (Jia Ren)" }, 
+                explanation: { 
+                    zh: "家人卦象征家庭和睦，离火出于巽风。'家人有严君焉，父母之谓也'。父父子子兄兄弟弟夫夫妇妇而家道正。问事家庭关系和谐，宜重视家庭。",
+                    en: "The Family—benefit through proper relationships. Wind comes from fire, creating warmth that reaches all. This hexagram emphasizes the importance of family order—fathers fathering, sons sonning, etc. When family relationships are correct, all under Heaven becomes stable."
+                } 
+            },
+            "100011": { 
+                name: { zh: "风雷益", en: "Increase (Yi)" }, 
+                explanation: { 
+                    zh: "益卦象征增益受益，震雷加于巽风。'益利有攸往，利涉大川'，风雷益，损益盈虚与时皆行。问事将有收益，宜积极进取。",
+                    en: "Increase—benefit through movement and action. Wind and thunder increase each other's power. This hexagram indicates a time when it is beneficial to undertake great endeavors and cross great waters. Benefits flow to those who act generously and correctly with their increase."
+                } 
+            },
+            "011011": { 
+                name: { zh: "巽为风", en: "The Gentle (Xun)" }, 
+                explanation: { 
+                    zh: "巽卦象征顺从进入，巽风相重。'巽小亨，利有攸往利见大人'，随风巽君子以申命行事。问事宜柔顺行事，循序渐进。",
+                    en: "The Gentle—small success through penetration. Wind follows wind, penetrating everywhere. This hexagram indicates the power of gentle, persistent influence. The superior person spreads their commands through gentle, repeated instruction. Success comes through gradual, flexible advance rather than force."
+                } 
+            },
+            "010011": { 
+                name: { zh: "风水涣", en: "Dispersion (Huan)" }, 
+                explanation: { 
+                    zh: "涣卦象征涣散化解，坎水入巽风。'涣亨，王假有庙利涉大川'。问事困难将化解，前景好转。聚者散之，涣者聚之。",
+                    en: "Dispersion—success through dissolution. Wind over water disperses ice and rigidity. This hexagram indicates a time when rigidity dissolves and obstacles disperse. The king approaches the temple—reconnecting with source and spirit helps dissolve difficulties. Crossing great waters is beneficial."
+                } 
+            },
+            "001011": { 
+                name: { zh: "风山渐", en: "Development (Jian)" }, 
+                explanation: { 
+                    zh: "渐卦象征循序渐进，艮山止巽风。'渐女归吉利贞'，渐进也，进以正可以正邦。问事宜循序渐进，不可急躁。",
+                    en: "Development—success through gradual progress. Wind on the mountain advances tree by tree. This hexagram indicates the beauty of gradual, natural progression, like a maiden's proper marriage. Do not force progress; allow things to unfold in their proper time. Success comes through steady, correct advance."
+                } 
+            },
+            "000011": { 
+                name: { zh: "风地观", en: "Contemplation (View) (Guan)" }, 
+                explanation: { 
+                    zh: "观卦象征观察审视，坤地从巽风。'观盥而不荐，有孚颙若'。神道设教，圣人以神道设教而天下服。问事需冷静观察形势，不可轻举妄动。",
+                    en: "Contemplation—success through observation. Wind across the Earth reaches everywhere. This hexagram indicates a time for careful observation and consideration before action. The ritual is contemplated but not yet performed. Through calm, respectful observation, one gains the insight needed for right action."
+                } 
+            },
+            "111010": { 
+                name: { zh: "水天需", en: "Waiting (Xu)" }, 
+                explanation: { 
+                    zh: "需卦象征等待需求，乾刚遇坎险。'需有孚光亨贞吉，利涉大川'。需于郊不犯难，需于沙容民畜众。问事需耐心等待，不可急躁。",
+                    en: "Waiting—success through trust and patience. Clouds rise to Heaven, waiting to rain. This hexagram indicates a time when waiting is necessary and beneficial. Wait with confidence and sincerity; the needed resources will arrive. Cross great waters when the proper time comes."
+                } 
+            },
+            "110010": { 
+                name: { zh: "水泽节", en: "Limitation (Jie)" }, 
+                explanation: { 
+                    zh: "节卦象征节制适度，兑泽下临坎水。'节亨，苦节不可贞'，节以制度不伤财不害民。问事宜节制行事，不可过度。",
+                    en: "Limitation—success through restraint. Water over the lake—regulating the flow. This hexagram indicates the necessity of proper limits and boundaries. Not too much, not too little. Limitation through proper institutions brings benefit without causing damage or regret."
+                } 
+            },
+            "101010": { 
+                name: { zh: "水火既济", en: "After Completion (Ji Ji)" }, 
+                explanation: { 
+                    zh: "既济卦象征事已成功，离火上照坎水。'既济亨，小利贞初吉终乱'。成功之后戒慎恐惧，思患豫防方保终吉。",
+                    en: "After Completion—success in small matters. Water over fire completes the cooking. This hexagram indicates a time when things are complete and successful, but this very completion contains the seeds of new disorder. Guard against complacency; maintain vigilance even after success."
+                } 
+            },
+            "100010": { 
+                name: { zh: "水雷屯", en: "Difficulty at the Beginning (Zhun)" }, 
+                explanation: { 
+                    zh: "屯卦象征艰难初创，震雷动于坎险。'屯元亨利贞，勿用有攸往利建侯'。万事开头难，云雷屯皆窒塞难通。问事事业初创，困难重重但前景光明。",
+                    en: "Difficulty at the Beginning—supreme success through perseverance. Thunder in the rain—chaotic, challenging beginnings. This hexagram represents the birth pangs of any new enterprise. Difficulty and confusion are natural at the start. Do not rush forward; establish order and gather allies."
+                } 
+            },
+            "011010": { 
+                name: { zh: "水风井", en: "The Well (Jing)" }, 
+                explanation: { 
+                    zh: "井卦象征汲养不变，巽木入坎水。'井改邑不改井，无丧无得'，井养而不穷。问事基础稳固，宜守成。",
+                    en: "The Well—fundamental resource that does not change. Water over wood draws up the well's resources. This hexagram indicates stable, enduring resources that nourish all. Though towns may change, the well remains. Maintain and care for fundamental resources; they provide inexhaustible benefit."
+                } 
+            },
+            "010010": { 
+                name: { zh: "坎为水", en: "The Abysmal (Kan)" }, 
+                explanation: { 
+                    zh: "坎卦象征险陷困难，坎水相重。'习坎有孚维心亨，行有尚'，水流而不盈行险而不失其信。问事正处于困难时期，需要谨慎。",
+                    en: "The Abysmal—success through repeated challenge. Water doubles itself, flowing through depths. This hexagram indicates times of danger and difficulty that require faith and persistence. While immersed in difficulty, maintain heart and trust. The water flows on, eventually reaching its goal."
+                } 
+            },
+            "001010": { 
+                name: { zh: "水山蹇", en: "Obstruction (Jian)" }, 
+                explanation: { 
+                    zh: "蹇卦象征艰难险阻，艮山阻坎水。'蹇利西南不利东北'，见险而能止知矣哉。问事前行受阻，需要谨慎。",
+                    en: "Obstruction—benefit in the southwest, not in the northeast. Water on the mountain is blocked. This hexagram indicates a time when progress is difficult and dangerous. It is wise to stop when seeing danger. Retreat to favorable conditions rather than forcing advance against obstruction."
+                } 
+            },
+            "000010": { 
+                name: { zh: "水地比", en: "Holding Together (Bi)" }, 
+                explanation: { 
+                    zh: "比卦象征亲近团结，坤地从坎水。'比吉，原筮元永贞，不宁方来'。比以辅为主，先迷后得主。问事宜与人亲近，团结合作。",
+                    en: "Holding Together—success through alliance. Water on Earth flows together, uniting all. This hexagram indicates benefits that come through proper association and loyalty. The insecure seek connection. Success comes through finding the right leader or group and holding together with them."
+                } 
+            },
+            "111001": { 
+                name: { zh: "山天大畜", en: "The Taming Power of the Great (Da Chu)" }, 
+                explanation: { 
+                    zh: "大畜卦象征大积蓄聚，乾刚畜于艮山。'大畜利贞，不家食吉利涉大川'。刚健笃实辉光，日新其德。问事积蓄丰厚，宜待机而动。",
+                    en: "The Taming Power of the Great—benefit through restraint and storage. Heaven within the mountain holds vast power. This hexagram indicates a time of great accumulation and potential that is held in reserve. Do not consume resources at home; rather, store them for great undertakings."
+                } 
+            },
+            "110001": { 
+                name: { zh: "山泽损", en: "Decrease (Sun)" }, 
+                explanation: { 
+                    zh: "损卦象征减损付出，兑泽入艮山。'损而有孚元亨利贞'，损下益上其道上行。问事需有所付出，但终有回报。",
+                    en: "Decrease—supreme success through sacrifice. The lake decreases to nourish the mountain. This hexagram indicates that decrease of the lower to benefit the upper brings success. Willing sacrifice and acceptance of loss create the conditions for future gain. What is given up in faith returns multiplied."
+                } 
+            },
+            "101001": { 
+                name: { zh: "山火贲", en: "Grace (Bi)" }, 
+                explanation: { 
+                    zh: "贲卦象征文饰美化，离火照艮山。'贲亨小利有攸往'，文明以止人文也。问事宜注重外表，但不可过分。",
+                    en: "Grace—success in small matters. Fire at the foot of the mountain illuminates and adorns. This hexagram indicates the appropriate use of ornament and culture to beautify and refine. Grace brings benefit, but should not become the substance. Success in small affairs; be cautious in great ones."
+                } 
+            },
+            "100001": { 
+                name: { zh: "山雷颐", en: "The Corners of the Mouth (Yi)" }, 
+                explanation: { 
+                    zh: "颐卦象征颐养修养，震雷动于艮山。'颐贞吉，养正则吉'。天地养万物，圣人养贤以及万民。问事宜注重修养，保重身体。",
+                    en: "The Corners of the Mouth—perseverance brings good fortune. Thunder in the mountain stimulates nourishment. This hexagram emphasizes proper nourishment of self and others. Heaven and Earth nourish all things; the wise person nourishes the wise to reach the people. Attention to health and proper speech brings benefit."
+                } 
+            },
+            "011001": { 
+                name: { zh: "山风蛊", en: "Work on What Has Been Spoiled (Gu)" }, 
+                explanation: { 
+                    zh: "蛊卦象征积弊改革，巽风入艮山。'蛊元亨利涉大川，先甲三日后甲三日'。蛊因人兴必有所以蛊。问事需革除积弊，改革创新。",
+                    en: "Work on What Has Been Spoiled—supreme success. Wind in the mountains disperses decay. This hexagram indicates a time when accumulated problems must be addressed. Reform and renovation are necessary. Calculate the proper timing (three days before and after) for instituting change."
+                } 
+            },
+            "010001": { 
+                name: { zh: "山水蒙", en: "Youful Folly (Meng)" }, 
+                explanation: { 
+                    zh: "蒙卦象征蒙昧启蒙，坎水浸艮山。'蒙亨，匪我求童蒙童蒙求我'。蒙以养正圣功也。问事需学习求教，启蒙之时。",
+                    en: "Youful Folly—success through education. Water at the foot of the mountain forms a spring. This hexagram indicates a time of inexperience that requires teaching. The teacher does not seek the student; the student seeks the teacher. Proper early education establishes the foundation for future wisdom."
+                } 
+            },
+            "001001": { 
+                name: { zh: "艮为山", en: "Keeping Still (Gen)" }, 
+                explanation: { 
+                    zh: "艮卦象征静止停止，艮山相重。'艮其背不获其身，行其庭不见其人'。止于所当止，动静不失其时。问事宜停止不前，等待时机。",
+                    en: "Keeping Still—peace through proper stopping. The mountain doubles itself, perfectly still. This hexagram indicates the necessity of keeping still and maintaining proper boundaries. Stop at the right place at the right time. When action is not appropriate, maintaining stillness brings peace."
+                } 
+            },
+            "000001": { 
+                name: { zh: "山地剥", en: "Splitting Apart (Bo)" }, 
+                explanation: { 
+                    zh: "剥卦象征剥落衰败，坤地承艮山。'剥不利有攸往'，剥以辨幽明消不可不盈。问事运势下滑，宜保守谨慎。",
+                    en: "Splitting Apart—no benefit in movement. The mountain rests on the Earth, being gradually undermined. This hexagram indicates a time when inferior forces are rising and superior forces are receding. Do not try to advance; guard what remains and wait for the turning point. The dark returns to the light."
+                } 
+            },
+            "111000": { 
+                name: { zh: "地天泰", en: "Peace (Tai)" }, 
+                explanation: { 
+                    zh: "泰卦象征通泰和谐，乾天交坤地。'小往大来吉亨'，天地交泰。泰之时义大矣哉，吉在交济。问事运势亨通，万事如意。",
+                    en: "Peace—success through interchange. Heaven and Earth unite, creating harmony and flourishing. This hexagram indicates a time of great harmony when the small departs and the great arrives. The interaction of Heaven and Earth brings peace and prosperity to all things."
+                } 
+            },
+            "110000": { 
+                name: { zh: "地泽临", en: "Approach (Lin)" }, 
+                explanation: { 
+                    zh: "地泽临卦象征监临督导，兑泽临坤地。'临元亨利贞，至于八月有凶'。以大临小以刚临柔。问事机会来临，宜积极把握。",
+                    en: "Approach—supreme success through proper leadership. The lake approaches the Earth, bringing nourishment. This hexagram indicates a time when great persons approach to teach and assist. However, note the warning: by August (the eighth month), vigilance is required as cycles change."
+                } 
+            },
+            "101000": { 
+                name: { zh: "地火明夷", en: "Darkening of the Light (Ming Yi)" }, 
+                explanation: { 
+                    zh: "明夷卦象征光明受伤，离火入坤地。'明夷利艰贞'，明入地中伤则晦，晦则忧忧则用晦而明。问事暂时受挫，需要忍耐。",
+                    en: "Darkening of the Light—perseverance through difficulty. Fire enters the Earth, its light obscured. This hexagram indicates a time when the bright must suffer injury and hide their light. While the light is darkened, maintain correct principles in adversity. Difficult times eventually pass."
+                } 
+            },
+            "100000": { 
+                name: { zh: "地雷复", en: "Return (Fu)" }, 
+                explanation: { 
+                    zh: "复卦象征回复复兴，震雷出于坤地。'复亨，七日来复'，反复其道天行也。复见天地之心。问事运势将转好，宜把握时机。",
+                    en: "Return—success through the turning point. Thunder within the Earth returns to movement. This hexagram indicates the return of positive forces after a period of decline. The cycle completes in seven days. The light returns; this is the heart of Heaven and Earth. Success comes through catching the turning tide."
+                } 
+            },
+            "011000": { 
+                name: { zh: "地风升", en: "Pushing Upward (Sheng)" }, 
+                explanation: { 
+                    zh: "升卦象征上升发展，巽风入坤地。'升元亨，用见大人勿恤，南征吉'。问事事业上升，前景光明。",
+                    en: "Pushing Upward—supreme success. Wood within the Earth pushes upward, growing. This hexagram indicates a time of steady ascent and progress. Do not worry; meet with great persons. The south (direction of light) brings good fortune. Success comes through patient, persistent upward movement."
+                } 
+            },
+            "010000": { 
+                name: { zh: "地水师", en: "The Army (Shi)" }, 
+                explanation: { 
+                    zh: "地水师卦象征兵众竞争，坎水浸坤地。'师贞丈人吉无咎'，师或舆尸贞凶。行险而顺养兵以正。问事竞争激烈，需要策略。",
+                    en: "The Army—success through proper command. Water in the Earth—dangerous but organized force. This hexagram indicates the need for disciplined organization and proper leadership. Success requires an experienced commander and correct principles. Without proper command, danger and disorder result."
+                } 
+            },
+            "001000": { 
+                name: { zh: "地山谦", en: "Modesty (Qian)" }, 
+                explanation: { 
+                    zh: "谦卦象征谦虚谦让，艮山在于坤地。'谦亨君子有终'，谦谦君子卑以自牧。劳谦君子万民服也。问事谦虚谨慎会带来好运。",
+                    en: "Modesty—success through humility. The mountain within the Earth lowers itself. This hexagram indicates that modesty brings success in all undertakings. The superior person lowers themselves to cultivate virtue. Modest, hardworking leadership brings universal respect and good fortune."
+                } 
+            },
+            "000000": { 
+                name: { zh: "坤为地", en: "The Receptive (Kun)" }, 
+                explanation: { 
+                    zh: "坤卦象征柔顺包容，坤地纯阴。'坤元亨利牝马之贞'，柔顺成乾，坤以简能。厚德载物，中正广生。问事宜柔顺行事，厚德待人。",
+                    en: "The Receptive—success through yielding. Pure Yin, the Earth receiving all. The mare's perseverance brings benefit. While the creative acts, the receptive completes. Success comes through supporting others, carrying all things with broad virtue. Be gentle, yielding, and supportive."
+                } 
+            }
         };
         
-                // 动爻含义 - 来自《白话高岛易断》详细解释
+        // 动爻含义双语
         const dongyaoMeanings = {
-            1: "初爻动，事情开始有变。根基爻动，示事物之始发生变化。初爻为卦之根本，动则根本动摇，预示新局面的开始。初阳动则变阴，初阴动则变阳。占得此爻，凡事宜重新考量，谋新篇。",
-            2: "二爻动，内部发展有变。二爻为内卦之中，动则内部变化。柔中应五，示人际内部关系或内部事务将有转变。占得此爻，宜调整内部策略，审慎应对。",
-            3: "三爻动，转折阶段有变。三爻为下卦之极，动则人事转变。上不接下不承，为多忧之位。占得此爻，处事宜谨慎，防微杜渐，避免失误。",
-            4: "四爻动，深入阶段有变。四爻为上卦之始，动则外境变化。近君位者，动关仕途；近臣位者，动关业务。四爻多惧，需谨慎行事。",
-            5: "五爻动，关键核心有变。五爻为君位卦主，动则事之关键处变化。阳刚中正者吉，阴柔失正者凶。占得此爻，宜把握核心，果断决策。",
-            6: "上爻动，结果终了有变。上爻为卦之终极，动则结果变化。动而上行或动而下济，各有不同。占得此爻，事情将收束，当观其果以定趋避。"
+            zh: {
+                1: "初爻动，事情开始有变。根基爻动，示事物之始发生变化。初爻为卦之根本，动则根本动摇，预示新局面的开始。初阳动则变阴，初阴动则变阳。占得此爻，凡事宜重新考量，谋新篇。",
+                2: "二爻动，内部发展有变。二爻为内卦之中，动则内部变化。柔中应五，示人际内部关系或内部事务将有转变。占得此爻，宜调整内部策略，审慎应对。",
+                3: "三爻动，转折阶段有变。三爻为下卦之极，动则人事转变。上不接下不承，为多忧之位。占得此爻，处事宜谨慎，防微杜渐，避免失误。",
+                4: "四爻动，深入阶段有变。四爻为上卦之始，动则外境变化。近君位者，动关仕途；近臣位者，动关业务。四爻多惧，需谨慎行事。",
+                5: "五爻动，关键核心有变。五爻为君位卦主，动则事之关键处变化。阳刚中正者吉，阴柔失正者凶。占得此爻，宜把握核心，果断决策。",
+                6: "上爻动，结果终了有变。上爻为卦之终极，动则结果变化。动而上行或动而下济，各有不同。占得此爻，事情将收束，当观其果以定趋避。"
+            },
+            en: {
+                1: "Line 1 moves—the beginning changes. As the foundation line moves, the base of the matter transforms. This indicates a new beginning, a fresh start. When the first Yang moves it becomes Yin; when the first Yin moves it becomes Yang. This hexagram suggests reconsidering matters and planning anew.",
+                2: "Line 2 moves—internal development changes. Line 2 is the center of the lower trigram; its movement indicates internal transformation. This suggests changes in relationships or internal affairs. Adjust internal strategies and proceed carefully.",
+                3: "Line 3 moves—the turning point changes. Line 3 is the top of the lower trigram; its movement indicates shifts in human affairs. This is a position of multiple concerns, neither continuing nor receiving support. Handle matters carefully, preventing small errors from becoming large.",
+                4: "Line 4 moves—the deepening stage changes. Line 4 is the beginning of the upper trigram; its movement indicates changes in external circumstances. For those near leadership, it concerns career; for those near implementation, it concerns business. Line 4 often brings caution—act carefully.",
+                5: "Line 5 moves—the key core changes. Line 5 is the ruler's position, the hexagram's lord; its movement indicates change at the critical point. Strong and centered brings good fortune; weak and off-center brings misfortune. Seize the core and decide decisively.",
+                6: "Line 6 moves—the final outcome changes. Line 6 is the hexagram's extreme; its movement indicates the result changes. Whether moving upward or delivering downward, each has its meaning. The matter concludes; observe the outcome to determine your course."
+            }
         };
         
         // 状态变量
@@ -923,6 +1577,9 @@
         let lastQuestion = '';
         let currentHand = '';
         let currentPurpose = '';
+        
+        // 全局时间数据缓存，用于解决异步获取地理位置导致保存时数据缺失的问题
+        let currentTimeData = null;
         
         // DOM元素
         const genderBtns = document.querySelectorAll('.gender-btn');
@@ -966,6 +1623,7 @@
                 genderBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 gender = btn.dataset.gender;
+                updateStepDisplay();
             });
         });
         
@@ -973,31 +1631,29 @@
             const currentQuestion = questionInput.value.trim();
             
             if (currentQuestion && currentQuestion === lastQuestion) {
-                showToast('同一问题请勿连续起卦（再三渎）');
+                showToast(t('toastDuplicate'));
                 return;
             }
             
-            if (currentQuestion && /死|生|寿命|死亡|临终/i.test(currentQuestion)) {
-                showToast('禁止问生死');
+            if (currentQuestion && /死|生|寿命|死亡|临终|death|die|dead|life span/i.test(currentQuestion)) {
+                showToast(t('toastDeath'));
                 return;
             }
             
             if (!currentQuestion) {
-                if (!confirm('您未填写所占之事。心不诚不占，是否继续？')) {
+                if (!confirm(t('toastUnsincere'))) {
                     return;
                 }
             }
             
             lastQuestion = currentQuestion;
             
-            // 隐藏起卦设置、占卦禁忌、起卦方法等板块
             document.getElementById('warningBox').style.display = 'none';
             document.getElementById('setupCard').style.display = 'none';
             document.getElementById('methodCard').style.display = 'none';
             document.getElementById('disclaimerBox').style.display = 'none';
             
-            // 显示所占之事
-            questionText.textContent = currentQuestion || '所占之事未填写';
+            questionText.textContent = currentQuestion || (currentLang === 'en' ? 'No inquiry entered' : '所占之事未填写');
             
             divinationArea.classList.add('active');
             startBtn.parentElement.classList.add('hidden');
@@ -1028,40 +1684,25 @@
                 else stepEl.classList.add('pending');
             }
             
+            const stepKeys = {
+                1: { title: 'step1Title', descMale: 'step1DescMale', descFemale: 'step1DescFemale' },
+                2: { title: 'step2Title', descMale: 'step2DescMale', descFemale: 'step2DescFemale' },
+                3: { title: 'step3Title', descMale: 'step3DescMale', descFemale: 'step3DescFemale' }
+            };
+            
+            const currentKeys = stepKeys[currentStep];
+            stepTitle.textContent = t(currentKeys.title);
+            
             if (gender === 'male') {
-                if (currentStep === 1) {
-                    stepTitle.textContent = '第一步：求上卦';
-                    stepDesc.textContent = '左手滑动下方进度条，将筮竹分到左手';
-                    currentHand = 'left';
-                    currentPurpose = 'shang';
-                } else if (currentStep === 2) {
-                    stepTitle.textContent = '第二步：求下卦';
-                    stepDesc.textContent = '右手滑动下方进度条，将筮竹分到右手';
-                    currentHand = 'right';
-                    currentPurpose = 'xia';
-                } else if (currentStep === 3) {
-                    stepTitle.textContent = '第三步：求动爻';
-                    stepDesc.textContent = '左手滑动下方进度条，将筮竹分到左手';
-                    currentHand = 'left';
-                    currentPurpose = 'dong';
-                }
+                stepDesc.textContent = t(currentKeys.descMale);
+                if (currentStep === 1) { currentHand = 'left'; currentPurpose = 'shang'; }
+                else if (currentStep === 2) { currentHand = 'right'; currentPurpose = 'xia'; }
+                else if (currentStep === 3) { currentHand = 'left'; currentPurpose = 'dong'; }
             } else {
-                if (currentStep === 1) {
-                    stepTitle.textContent = '第一步：求上卦';
-                    stepDesc.textContent = '右手滑动下方进度条，将筮竹分到右手';
-                    currentHand = 'right';
-                    currentPurpose = 'shang';
-                } else if (currentStep === 2) {
-                    stepTitle.textContent = '第二步：求下卦';
-                    stepDesc.textContent = '左手滑动下方进度条，将筮竹分到左手';
-                    currentHand = 'left';
-                    currentPurpose = 'xia';
-                } else if (currentStep === 3) {
-                    stepTitle.textContent = '第三步：求动爻';
-                    stepDesc.textContent = '右手滑动下方进度条，将筮竹分到右手';
-                    currentHand = 'right';
-                    currentPurpose = 'dong';
-                }
+                stepDesc.textContent = t(currentKeys.descFemale);
+                if (currentStep === 1) { currentHand = 'right'; currentPurpose = 'shang'; }
+                else if (currentStep === 2) { currentHand = 'left'; currentPurpose = 'xia'; }
+                else if (currentStep === 3) { currentHand = 'right'; currentPurpose = 'dong'; }
             }
             
             updateSliderStyle();
@@ -1069,7 +1710,7 @@
         
         function updateSliderStyle() {
             singleSliderBox.className = 'single-slider-box ' + currentHand;
-            handTitle.textContent = currentHand === 'left' ? '左手' : '右手';
+            handTitle.textContent = currentHand === 'left' ? t('leftHand') : t('rightHand');
         }
         
         function resetSliderArea() {
@@ -1088,16 +1729,11 @@
             updateBambooVisual();
         }
         
-        // ============================================
-        // 优化：音效与震动反馈系统（精致化版本）
-        // ============================================
-        
-        // 音频上下文（延迟初始化以避免自动播放策略问题）
+        // 音效与震动反馈系统
         let audioContext = null;
         let lastSoundTime = 0;
-        const SOUND_THROTTLE = 60; // 音效节流间隔(ms)，更紧凑的反馈
+        const SOUND_THROTTLE = 60;
         
-        // 初始化音频上下文
         function initAudio() {
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -1107,97 +1743,64 @@
             }
         }
         
-        // 优化：精致的手机输入法风格竹签音效（三层合成）
         function playBambooSound(isLeftHand, intensity = 1) {
             if (!audioContext) return;
-            
             const now = audioContext.currentTime;
+            const baseFreq = isLeftHand ? 520 : 720;
             
-            // 左手用较低沉的"笃"声，右手用较清亮的"嗒"声（类似输入法不同音高）
-            const baseFreq = isLeftHand ? 520 : 720;  // 左手更低沉，右手更清脆
-            
-            // 第一层：主音（正弦波，柔和的木质共鸣）
             const osc1 = audioContext.createOscillator();
             const gain1 = audioContext.createGain();
             osc1.type = 'sine';
             osc1.frequency.setValueAtTime(baseFreq, now);
             osc1.frequency.exponentialRampToValueAtTime(baseFreq * 0.6, now + 0.04);
-            
             gain1.gain.setValueAtTime(0, now);
-            gain1.gain.linearRampToValueAtTime(0.18 * intensity, now + 0.002); // 极快attack
-            gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.045); // 短促decay
-            
+            gain1.gain.linearRampToValueAtTime(0.18 * intensity, now + 0.002);
+            gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
             osc1.connect(gain1);
             gain1.connect(audioContext.destination);
             osc1.start(now);
             osc1.stop(now + 0.05);
             
-            // 第二层：高频点击（三角波+高通，模拟竹签接触的清亮感）
             const osc2 = audioContext.createOscillator();
             const gain2 = audioContext.createGain();
             const filter2 = audioContext.createBiquadFilter();
-            
             osc2.type = 'triangle';
-            osc2.frequency.setValueAtTime(baseFreq * 1.8, now); // 高频谐波
-            
+            osc2.frequency.setValueAtTime(baseFreq * 1.8, now);
             filter2.type = 'highpass';
             filter2.frequency.setValueAtTime(800, now);
             filter2.Q.setValueAtTime(1.5, now);
-            
             gain2.gain.setValueAtTime(0, now);
             gain2.gain.linearRampToValueAtTime(0.08 * intensity, now + 0.001);
             gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
-            
             osc2.connect(filter2);
             filter2.connect(gain2);
             gain2.connect(audioContext.destination);
             osc2.start(now);
             osc2.stop(now + 0.03);
             
-            // 第三层：极短促的"咔"声（方波极短触发，模拟脆响）
             const osc3 = audioContext.createOscillator();
             const gain3 = audioContext.createGain();
             osc3.type = 'square';
             osc3.frequency.setValueAtTime(baseFreq * 2.5, now);
-            
             gain3.gain.setValueAtTime(0, now);
             gain3.gain.linearRampToValueAtTime(0.05 * intensity, now + 0.0005);
             gain3.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
-            
             osc3.connect(gain3);
             gain3.connect(audioContext.destination);
             osc3.start(now);
             osc3.stop(now + 0.02);
         }
         
-        // 优化：震动反馈（增强移动端兼容性）
         function triggerVibration() {
-            // 检查是否支持震动
-            if (!('vibrate' in navigator)) {
-                console.log('Vibration API not supported');
-                return;
-            }
-            
+            if (!('vibrate' in navigator)) return;
             try {
-                // 使用单次短震（兼容性最好）
-                // 模式：极短触-停顿-稍长震（模拟竹签分批落定）
                 const pattern = [15, 30, 45];
-                
-                // 直接调用，不包装在异步中，确保在用户手势栈中执行
-                const result = navigator.vibrate(pattern);
-                console.log('Vibration triggered:', result);
+                navigator.vibrate(pattern);
             } catch (e) {
-                console.log('Vibration error:', e);
-                // 备用：尝试单次震动
-                try {
-                    navigator.vibrate(50);
-                } catch (e2) {
-                    console.log('Vibration fallback failed:', e2);
-                }
+                try { navigator.vibrate(50); } catch (e2) {}
             }
         }
         
-        // 节流函数
         function throttleSound(callback, isLeftHand) {
             const now = Date.now();
             if (now - lastSoundTime > SOUND_THROTTLE) {
@@ -1218,43 +1821,29 @@
                 const currentX = sliderThumb.getBoundingClientRect().left - rect.left + 20;
                 startPercent = (currentX / rect.width) * 100;
                 sliderThumb.style.cursor = 'grabbing';
-                
-                // 关键：立即初始化音频上下文并解锁（必须在用户手势中）
                 initAudio();
-                
-                // 拖动开始时立即触发一次反馈（给用户立即确认）
                 playBambooSound(currentHand === 'left', 0.8);
-                
                 e.preventDefault();
             }
             
             function handleMove(e) {
                 if (!isDragging) return;
-                
                 const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
                 const rect = sliderTrack.getBoundingClientRect();
                 const deltaX = clientX - startX;
                 const deltaPercent = (deltaX / rect.width) * 100;
                 let newPercent = startPercent + deltaPercent;
-                
                 newPercent = Math.max(0, Math.min(100, newPercent));
                 const newValue = Math.round((newPercent / 100) * 49);
                 
-                // 只有当数值变化时才触发音效（竹签移动感）
                 if (newValue !== lastValue) {
                     sliderValue = newValue;
                     updateSliderUI();
-                    
-                    // 根据移动速度调整音效强度
                     const delta = Math.abs(newValue - lastValue);
                     const intensity = Math.min(delta / 2, 1) * 0.7 + 0.3;
-                    
-                    // 节流播放竹签碰撞声
                     throttleSound(playBambooSound, currentHand === 'left');
-                    
                     lastValue = newValue;
                 }
-                
                 e.preventDefault();
             }
             
@@ -1262,17 +1851,8 @@
                 if (isDragging) {
                     isDragging = false;
                     sliderThumb.style.cursor = 'grab';
-                    
-                    // 关键：停止拖动时立即触发震动（必须在事件处理函数中直接调用）
-                    // 使用 setTimeout 0 确保在 iOS 的点击完成周期内执行
-                    setTimeout(() => {
-                        triggerVibration();
-                    }, 0);
-                    
-                    // 播放一声稍重的"落定"音（三层合成更明显）
-                    if (audioContext) {
-                        playBambooSound(currentHand === 'left', 1.3);
-                    }
+                    setTimeout(() => { triggerVibration(); }, 0);
+                    if (audioContext) { playBambooSound(currentHand === 'left', 1.3); }
                 }
             }
             
@@ -1285,20 +1865,14 @@
             
             sliderTrack.addEventListener('click', (e) => {
                 if (e.target === sliderThumb) return;
-                
-                // 初始化音频
                 initAudio();
-                
                 const rect = sliderTrack.getBoundingClientRect();
                 const clickX = e.clientX - rect.left;
                 const newPercent = (clickX / rect.width) * 100;
                 const newValue = Math.round((newPercent / 100) * 49);
-                
                 if (newValue !== sliderValue) {
                     sliderValue = newValue;
                     updateSliderUI();
-                    
-                    // 点击跳转时播放音效并立即震动
                     playBambooSound(currentHand === 'left', 0.9);
                     triggerVibration();
                 }
@@ -1309,7 +1883,7 @@
         
         confirmSplitBtn.addEventListener('click', () => {
             if (sliderValue === 0 || sliderValue === 49) {
-                showToast('请确保分堆两边都有筮竹');
+                showToast(t('toastSplitError'));
                 return;
             }
             
@@ -1319,8 +1893,8 @@
             
             const resultHandBox = document.getElementById('resultHandBox');
             resultHandBox.className = 'result-single-hand ' + currentHand;
-            document.getElementById('resultHandTitle').textContent = currentHand === 'left' ? '左手' : '右手';
-            document.getElementById('resultHandCount').textContent = sliderValue + '根';
+            document.getElementById('resultHandTitle').textContent = currentHand === 'left' ? t('leftHand') : t('rightHand');
+            document.getElementById('resultHandCount').textContent = sliderValue + (currentLang === 'en' ? ' stalks' : '根');
             
             let result = 0;
             let resultText = '';
@@ -1330,32 +1904,34 @@
                 result = sliderValue % 8;
                 if (result === 0) result = 8;
                 shangGua = result;
-                formula = `${sliderValue} ÷ 8 = 余 ${sliderValue % 8 || 8}`;
-                resultText = `得上卦：${baguaName[result]}卦（${result}）`;
+                formula = `${sliderValue} ÷ 8 = ${Math.floor(sliderValue/8)} R ${sliderValue % 8 || 8}`;
+                resultText = (currentLang === 'en' ? 
+                    `Upper Trigram: ${baguaName.en[result]} (${result})` : 
+                    `得上卦：${baguaName.zh[result]}卦（${result}）`);
             } else if (currentPurpose === 'xia') {
                 result = sliderValue % 8;
                 if (result === 0) result = 8;
                 xiaGua = result;
-                formula = `${sliderValue} ÷ 8 = 余 ${sliderValue % 8 || 8}`;
-                resultText = `得下卦：${baguaName[result]}卦（${result}）`;
+                formula = `${sliderValue} ÷ 8 = ${Math.floor(sliderValue/8)} R ${sliderValue % 8 || 8}`;
+                resultText = (currentLang === 'en' ? 
+                    `Lower Trigram: ${baguaName.en[result]} (${result})` : 
+                    `得下卦：${baguaName.zh[result]}卦（${result}）`);
             } else if (currentPurpose === 'dong') {
                 result = sliderValue % 6;
                 if (result === 0) result = 6;
                 dongYao = result;
-                formula = `${sliderValue} ÷ 6 = 余 ${sliderValue % 6 || 6}`;
-                resultText = `得动爻：${yaoName[result - 1]}（${result}）`;
+                formula = `${sliderValue} ÷ 6 = ${Math.floor(sliderValue/6)} R ${sliderValue % 6 || 6}`;
+                const yaoText = currentLang === 'en' ? yaoName.en[result - 1] : yaoName.zh[result - 1];
+                resultText = (currentLang === 'en' ? 
+                    `Moving Line: ${yaoText} (${result})` : 
+                    `得动爻：${yaoText}（${result}）`);
             }
             
             document.getElementById('resultCalc').textContent = formula;
             document.getElementById('resultGua').textContent = resultText;
             
             nextStepArea.classList.add('active');
-            
-            if (currentStep < 3) {
-                nextStepBtn.textContent = '下一步';
-            } else {
-                nextStepBtn.textContent = '查看结果';
-            }
+            nextStepBtn.textContent = currentStep < 3 ? t('nextStep') : t('viewResult');
         });
         
         nextStepBtn.addEventListener('click', () => {
@@ -1369,44 +1945,21 @@
             }
         });
         
-        // ============================================
-        // 真太阳时计算函数（新增）
-        // ============================================
-        
-        // 计算均时差（Equation of Time），返回分钟数
         function getEquationOfTime(date) {
             const start = new Date(date.getFullYear(), 0, 1);
             const diff = date - start;
             const oneDay = 1000 * 60 * 60 * 24;
             const dayOfYear = Math.floor(diff / oneDay) + 1;
-            
-            // 均时差近似计算公式（单位：分钟）
             const B = (360 / 365) * (dayOfYear - 81);
             const rad = Math.PI / 180;
-            const eot = 9.87 * Math.sin(2 * B * rad) - 7.53 * Math.cos(B * rad) - 1.5 * Math.sin(B * rad);
-            
-            return eot;
+            return 9.87 * Math.sin(2 * B * rad) - 7.53 * Math.cos(B * rad) - 1.5 * Math.sin(B * rad);
         }
         
-        // 将小时转换为十二地支时辰
         function getDizhi(hour) {
-            // 时辰划分：23-1子，1-3丑，3-5寅，5-7卯，7-9辰，9-11巳，11-13午，13-15未，15-17申，17-19酉，19-21戌，21-23亥
-            if (hour >= 23 || hour < 1) return '子';
-            if (hour >= 1 && hour < 3) return '丑';
-            if (hour >= 3 && hour < 5) return '寅';
-            if (hour >= 5 && hour < 7) return '卯';
-            if (hour >= 7 && hour < 9) return '辰';
-            if (hour >= 9 && hour < 11) return '巳';
-            if (hour >= 11 && hour < 13) return '午';
-            if (hour >= 13 && hour < 15) return '未';
-            if (hour >= 15 && hour < 17) return '申';
-            if (hour >= 17 && hour < 19) return '酉';
-            if (hour >= 19 && hour < 21) return '戌';
-            if (hour >= 21 && hour < 23) return '亥';
-            return '子';
+            const index = Math.floor(((hour + 1) % 24) / 2);
+            return dizhiName[index];
         }
         
-        // 格式化日期时间
         function formatDateTime(date) {
             const y = date.getFullYear();
             const m = String(date.getMonth() + 1).padStart(2, '0');
@@ -1417,80 +1970,67 @@
             return `${y}-${m}-${d} ${h}:${min}:${s}`;
         }
         
-        // 显示起卦时间（真太阳时）
         function displayDivinationTime() {
             const now = new Date();
             const beijingTimeStr = formatDateTime(now);
-            
-            // 显示北京时间
             document.getElementById('beijingTime').textContent = beijingTimeStr;
             
-            // 尝试获取地理位置计算真太阳时
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         const longitude = position.coords.longitude;
-                        const standardLongitude = 120; // 北京时间基准经度
-                        
-                        // 经度差修正（每度4分钟）
+                        const standardLongitude = 120;
                         const longitudeDiff = longitude - standardLongitude;
                         const longitudeCorrection = longitudeDiff * 4;
-                        
-                        // 均时差修正
                         const eotCorrection = getEquationOfTime(now);
-                        
-                        // 总修正分钟数
                         const totalCorrection = longitudeCorrection + eotCorrection;
-                        
-                        // 计算真太阳时
                         const trueSolarTime = new Date(now.getTime() + totalCorrection * 60 * 1000);
                         const trueSolarTimeStr = formatDateTime(trueSolarTime);
-                        
-                        // 获取十二地支时辰
                         const dizhi = getDizhi(trueSolarTime.getHours());
                         
-                        // 显示真太阳时信息
                         document.getElementById('trueSolarTime').textContent = trueSolarTimeStr;
-                        document.getElementById('dizhiTime').textContent = dizhi + '时';
+                        document.getElementById('dizhiTime').textContent = dizhi + (currentLang === 'en' ? ' Hour' : '时');
                         document.getElementById('longitudeVal').textContent = longitude.toFixed(2);
                         
                         const correctionSign = totalCorrection > 0 ? '+' : '';
                         document.getElementById('correctionVal').textContent = 
                             `${correctionSign}${totalCorrection.toFixed(1)}`;
                         
-                        // 显示相关元素
                         document.getElementById('trueSolarRow').style.display = 'flex';
                         document.getElementById('dizhiRow').style.display = 'flex';
                         document.getElementById('locationInfo').style.display = 'block';
                         document.getElementById('locationError').style.display = 'none';
+                        
+                        // 缓存时间数据，确保历史记录能正确保存
+                        currentTimeData = {
+                            trueSolarTime: trueSolarTimeStr,
+                            dizhi: dizhi + (currentLang === 'en' ? ' Hour' : '时')
+                        };
                     },
                     (error) => {
-                        console.log('无法获取地理位置：', error);
+                        console.log('Location error:', error);
                         document.getElementById('locationError').style.display = 'block';
                         document.getElementById('trueSolarRow').style.display = 'none';
                         document.getElementById('dizhiRow').style.display = 'none';
                         document.getElementById('locationInfo').style.display = 'none';
+                        currentTimeData = null;
                     },
-                    {
-                        enableHighAccuracy: false,
-                        timeout: 10000,
-                        maximumAge: 60000
-                    }
+                    { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 }
                 );
             } else {
-                // 浏览器不支持定位
-                document.getElementById('locationError').textContent = '浏览器不支持地理定位，显示为北京时间（东经120°标准时）';
+                document.getElementById('locationError').textContent = currentLang === 'en' ? 
+                    "Geolocation not supported. Using Beijing Time (120°E standard)." : 
+                    "浏览器不支持地理定位，显示为北京时间（东经120°标准时）。";
                 document.getElementById('locationError').style.display = 'block';
                 document.getElementById('trueSolarRow').style.display = 'none';
                 document.getElementById('dizhiRow').style.display = 'none';
                 document.getElementById('locationInfo').style.display = 'none';
+                currentTimeData = null;
             }
         }
         
         function showFinalResult() {
-            // 显示起卦时间（真太阳时）
             displayDivinationTime();
-            
             divinationArea.classList.remove('active');
             resultArea.classList.add('active');
             
@@ -1499,7 +2039,7 @@
             const benGuaCode = xiaCode + shangCode;
             
             const benGua = guaData[benGuaCode];
-            document.getElementById('benGuaName').textContent = benGua ? benGua.name : '未知卦';
+            document.getElementById('benGuaName').textContent = benGua ? benGua.name[currentLang] : 'Unknown';
             
             const benGuaYaoContainer = document.getElementById('benGuaYao');
             benGuaYaoContainer.innerHTML = '';
@@ -1510,7 +2050,7 @@
                 
                 const yaoNum = document.createElement('span');
                 yaoNum.className = 'yao-number';
-                yaoNum.textContent = yaoName[i];
+                yaoNum.textContent = currentLang === 'en' ? yaoName.en[i] : yaoName.zh[i];
                 
                 const yao = document.createElement('div');
                 yao.className = 'yao';
@@ -1536,7 +2076,7 @@
             }
             
             const bianGua = guaData[bianGuaCode];
-            document.getElementById('bianGuaName').textContent = bianGua ? bianGua.name : '未知卦';
+            document.getElementById('bianGuaName').textContent = bianGua ? bianGua.name[currentLang] : 'Unknown';
             
             const bianGuaYaoContainer = document.getElementById('bianGuaYao');
             bianGuaYaoContainer.innerHTML = '';
@@ -1547,7 +2087,7 @@
                 
                 const yaoNum = document.createElement('span');
                 yaoNum.className = 'yao-number';
-                yaoNum.textContent = yaoName[i];
+                yaoNum.textContent = currentLang === 'en' ? yaoName.en[i] : yaoName.zh[i];
                 
                 const yao = document.createElement('div');
                 yao.className = 'yao';
@@ -1562,29 +2102,45 @@
             const dongyaoContent = document.getElementById('dongyaoContent');
             const dongyaoMeaning = document.getElementById('dongyaoMeaning');
             const isYangDong = benGuaCode[dongYao - 1] === '1';
-            dongyaoContent.textContent = `${yaoName[dongYao - 1]} ${isYangDong ? '阳爻' : '阴爻'} 发动`;
-            dongyaoMeaning.textContent = dongyaoMeanings[dongYao];
+            
+            const movingLineText = currentLang === 'en' ? 
+                `${yaoName.en[dongYao - 1]} ${isYangDong ? 'Yang' : 'Yin'} moves` : 
+                `${yaoName.zh[dongYao - 1]} ${isYangDong ? '阳爻' : '阴爻'} 发动`;
+            
+            dongyaoContent.textContent = movingLineText;
+            dongyaoMeaning.textContent = dongyaoMeanings[currentLang][dongYao];
             
             const explanation = document.getElementById('guaExplanation');
             let expText = '';
             
             if (benGua) {
-                expText += `本卦（重要性30—40%）为${benGua.name}，${benGua.explanation}\n\n`;
+                expText += (currentLang === 'en' ? 
+                    `Primary Hexagram (30-40% significance): ${benGua.name.en}. ${benGua.explanation.en}\n\n` : 
+                    `本卦（重要性30—40%）为${benGua.name.zh}，${benGua.explanation.zh}\n\n`);
             }
             
-            if (bianGua && bianGua.name !== benGua.name) {
-                expText += `变卦（重要性10—30%）为${bianGua.name}，${bianGua.explanation}\n\n`;
+            if (bianGua && bianGua.name[currentLang] !== benGua.name[currentLang]) {
+                expText += (currentLang === 'en' ? 
+                    `Changed Hexagram (10-30% significance): ${bianGua.name.en}. ${bianGua.explanation.en}\n\n` : 
+                    `变卦（重要性10—30%）为${bianGua.name.zh}，${bianGua.explanation.zh}\n\n`);
             }
             
-            expText += `动爻${yaoName[dongYao - 1]}发动，${isYangDong ? '阳变阴' : '阴变阳'}，得变卦。`;
+            expText += (currentLang === 'en' ? 
+                `${yaoName.en[dongYao - 1]} moves: ${isYangDong ? 'Yang becomes Yin' : 'Yin becomes Yang'}, creating the Changed Hexagram.` : 
+                `动爻${yaoName.zh[dongYao - 1]}发动，${isYangDong ? '阳变阴' : '阴变阳'}，得变卦。`);
             
             explanation.textContent = expText;
             
             const methodInfo = document.getElementById('methodInfo');
-            methodInfo.innerHTML = `
-                上卦：${baguaName[shangGua]}（${shangGua}） | 下卦：${baguaName[xiaGua]}（${xiaGua}） | 动爻：${yaoName[dongYao - 1]}（${dongYao}）<br>
-                起卦方式：高岛易断略筮法 | 性别：${gender === 'male' ? '男士' : '女士'}
-            `;
+            const upperName = currentLang === 'en' ? baguaName.en[shangGua] : baguaName.zh[shangGua];
+            const lowerName = currentLang === 'en' ? baguaName.en[xiaGua] : baguaName.zh[xiaGua];
+            const yaoText = currentLang === 'en' ? yaoName.en[dongYao - 1] : yaoName.zh[dongYao - 1];
+            const genderText = currentLang === 'en' ? (gender === 'male' ? 'Male' : 'Female') : (gender === 'male' ? '男士' : '女士');
+            const methodText = currentLang === 'en' ? "Takashima's Simplified Method" : "高岛易断略筮法";
+            
+            methodInfo.innerHTML = currentLang === 'en' ? 
+                `Upper: ${upperName} (${shangGua}) | Lower: ${lowerName} (${xiaGua}) | Moving: ${yaoText} (${dongYao})<br>Method: ${methodText} | Gender: ${genderText}` : 
+                `上卦：${upperName}（${shangGua}） | 下卦：${lowerName}（${xiaGua}） | 动爻：${yaoText}（${dongYao}）<br>起卦方式：${methodText} | 性别：${genderText}`;
         }
         
         document.getElementById('restartBtn').addEventListener('click', () => {
@@ -1593,10 +2149,8 @@
             startBtn.parentElement.classList.remove('hidden');
             questionInput.value = '';
             lastQuestion = '';
-            // 关闭往卦面板
             document.getElementById('historyArea').style.display = 'none';
             
-            // 恢复其他板块显示
             document.getElementById('warningBox').style.display = '';
             document.getElementById('setupCard').style.display = '';
             document.getElementById('methodCard').style.display = '';
@@ -1604,20 +2158,16 @@
         });
         
         document.getElementById('saveBtn').addEventListener('click', () => {
-            const question = questionInput.value || '未填写';
+            const question = questionInput.value || (currentLang === 'en' ? 'Not entered' : '未填写');
             const benGuaName = document.getElementById('benGuaName').textContent;
             const bianGuaName = document.getElementById('bianGuaName').textContent;
             const dongyaoContent = document.getElementById('dongyaoContent').textContent;
-            const methodInfo = document.getElementById('methodInfo').textContent;
             const beijingTime = document.getElementById('beijingTime').textContent;
-            const trueSolarTime = document.getElementById('trueSolarRow').style.display !== 'none' 
-                ? document.getElementById('trueSolarTime').textContent 
-                : '未获取定位';
-            const dizhi = document.getElementById('dizhiRow').style.display !== 'none'
-                ? document.getElementById('dizhiTime').textContent
-                : '';
+            const trueSolarRow = document.getElementById('trueSolarRow');
+            const dizhiRow = document.getElementById('dizhiRow');
+            const trueSolarTime = trueSolarRow.style.display !== 'none' ? document.getElementById('trueSolarTime').textContent : '';
+            const dizhi = dizhiRow.style.display !== 'none' ? document.getElementById('dizhiTime').textContent : '';
             
-            // 计算本卦和变卦编码以获取详细解析
             const shangCode = baguaCode[shangGua];
             const xiaCode = baguaCode[xiaGua];
             const benGuaCode = xiaCode + shangCode;
@@ -1635,42 +2185,69 @@
             const bianGuaData = guaData[bianGuaCode];
             
             const now = new Date();
-            const dateStr = now.toLocaleString('zh-CN');
+            const dateStr = now.toLocaleString(currentLang === 'en' ? 'en-US' : 'zh-CN');
             
-            const content = `
-高岛易断略筮法起卦结果
+            let content;
+            if (currentLang === 'en') {
+                content = `
+${t('resultHeader').trim()}
+${t('timeBeijing')} ${beijingTime}
+${t('timeTrueSolar')} ${trueSolarTime} ${dizhi}
+${t('questionLabelExport')} ${question}
+
+${t('primaryGuaLabel')} ${benGuaName}
+${t('changedGuaLabel')} ${bianGuaName}
+${t('movingYaoLabel')} ${dongyaoContent}
+${document.getElementById('methodInfo').textContent}
+
+${t('analysisPrimary')}
+${benGuaData ? benGuaData.explanation.en : 'N/A'}
+
+${t('analysisChanged')}
+${bianGuaData ? bianGuaData.explanation.en : 'N/A'}
+
+${t('analysisMoving')}
+${dongyaoMeanings.en[dongYao]}
 ========================
-起卦时间（北京）：${beijingTime}
+                `.trim();
+            } else {
+                content = `
+${t('resultHeader').trim()}
+${t('timeBeijing')} ${beijingTime}
 真太阳时：${trueSolarTime} ${dizhi}
 所占之事：${question}
 
 本卦：${benGuaName}
 变卦：${bianGuaName}
 动爻：${dongyaoContent}
-${methodInfo}
+${document.getElementById('methodInfo').textContent}
 
 【本卦（重要性30—40%）卦辞解析】
-${benGuaData ? benGuaData.explanation : '无'}
+${benGuaData ? benGuaData.explanation.zh : '无'}
 
 【变卦（重要性10—30%）（之卦）卦辞解析】
-${bianGuaData ? bianGuaData.explanation : '无'}
+${bianGuaData ? bianGuaData.explanation.zh : '无'}
 
 【动爻（重要性51%）解析】
-${dongyaoMeanings[dongYao]}
+${dongyaoMeanings.zh[dongYao]}
 ========================
-            `.trim();
+                `.trim();
+            }
             
             const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `高岛易断_${benGuaName}_${dateStr.replace(/[/:]/g, '-')}.txt`;
+            const fileName = currentLang === 'en' ? 
+                `Takashima_Divination_${benGuaName}_${dateStr.replace(/[/:]/g, '-')}.txt` :
+                `高岛易断_${benGuaName}_${dateStr.replace(/[/:]/g, '-')}.txt`;
+            a.download = fileName;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            showToast('结果已保存！');
+            showToast(t('toastSaved'));
         });
         
         function showToast(message) {
@@ -1681,21 +2258,31 @@ ${dongyaoMeanings[dongYao]}
             }, 2000);
         }
         
-        // 历史记录功能
-        const HISTORY_KEY = 'gaodao_divination_history';
+        const HISTORY_KEY = 'gaodao_divination_history_v2';
         
-        // 保存到历史记录
         function saveToHistory() {
-            const question = questionInput.value || '未填写';
+            const question = questionInput.value || (currentLang === 'en' ? 'Not entered' : '未填写');
             const beijingTime = document.getElementById('beijingTime').textContent;
-            const trueSolarRow = document.getElementById('trueSolarRow');
-            const dizhiRow = document.getElementById('dizhiRow');
-            const trueSolarTime = trueSolarRow.style.display !== 'none' 
-                ? document.getElementById('trueSolarTime').textContent 
-                : '';
-            const dizhi = dizhiRow.style.display !== 'none'
-                ? document.getElementById('dizhiTime').textContent
-                : '';
+            
+            // 优先使用缓存的时间数据（如果存在），否则尝试从DOM获取
+            let trueSolarTime = '';
+            let dizhi = '';
+            
+            if (currentTimeData) {
+                // 使用displayDivinationTime中缓存的数据
+                trueSolarTime = currentTimeData.trueSolarTime;
+                dizhi = currentTimeData.dizhi;
+            } else {
+                // 回退到DOM获取（适用于地理位置获取失败的情况）
+                const trueSolarRow = document.getElementById('trueSolarRow');
+                const dizhiRow = document.getElementById('dizhiRow');
+                if (trueSolarRow.style.display !== 'none') {
+                    trueSolarTime = document.getElementById('trueSolarTime').textContent;
+                }
+                if (dizhiRow.style.display !== 'none') {
+                    dizhi = document.getElementById('dizhiTime').textContent;
+                }
+            }
             
             const shangCode = baguaCode[shangGua];
             const xiaCode = baguaCode[xiaGua];
@@ -1717,11 +2304,12 @@ ${dongyaoMeanings[dongYao]}
                 dizhi,
                 question,
                 gender,
+                lang: currentLang,
                 shangGua,
                 xiaGua,
                 dongYao,
-                benGuaName: guaData[benGuaCode]?.name || '未知卦',
-                bianGuaName: guaData[bianGuaCode]?.name || '未知卦',
+                benGuaName: { zh: guaData[benGuaCode]?.name.zh || '未知卦', en: guaData[benGuaCode]?.name.en || 'Unknown' },
+                bianGuaName: { zh: guaData[bianGuaCode]?.name.zh || '未知卦', en: guaData[bianGuaCode]?.name.en || 'Unknown' },
                 benGuaCode,
                 bianGuaCode,
                 timestamp: new Date().toISOString()
@@ -1729,18 +2317,37 @@ ${dongyaoMeanings[dongYao]}
             
             let history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
             history.unshift(record);
-            if (history.length > 50) history = history.slice(0, 50); // 最多保存50条
+            if (history.length > 50) history = history.slice(0, 50);
             localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+            
+            // 清空当前时间缓存，避免影响下一条记录
+            currentTimeData = null;
         }
         
-        // 修改原有的 showFinalResult 函数，在显示结果后自动保存
         const originalShowFinalResult = showFinalResult;
         showFinalResult = function() {
             originalShowFinalResult();
-            saveToHistory(); // 自动保存到历史记录
+            
+            // 使用轮询检查确保在获取地理位置完成后再保存历史记录
+            let checkCount = 0;
+            const maxChecks = 100; // 最多等待10秒 (100 * 100ms)
+            
+            const checkInterval = setInterval(() => {
+                checkCount++;
+                const trueSolarRow = document.getElementById('trueSolarRow');
+                const locationError = document.getElementById('locationError');
+                
+                // 检查是否已获取到地理位置（成功显示真太阳时 或 显示错误信息）
+                const isSuccess = trueSolarRow.style.display !== 'none' && document.getElementById('dizhiRow').style.display !== 'none';
+                const isError = locationError.style.display === 'block';
+                
+                if (isSuccess || isError || checkCount >= maxChecks) {
+                    clearInterval(checkInterval);
+                    saveToHistory();
+                }
+            }, 100);
         };
         
-        // 切换历史记录显示
         function toggleHistory() {
             const historyArea = document.getElementById('historyArea');
             if (historyArea.style.display === 'none') {
@@ -1751,34 +2358,32 @@ ${dongyaoMeanings[dongYao]}
             }
         }
         
-        // 从首页显示历史记录
         function showHistoryFromHome() {
-            // 隐藏其他区域
             startBtn.parentElement.classList.add('hidden');
             document.getElementById('warningBox').style.display = 'none';
             document.getElementById('setupCard').style.display = 'none';
             document.getElementById('methodCard').style.display = 'none';
             document.getElementById('disclaimerBox').style.display = 'none';
             
-            // 显示结果区域（用于展示历史记录）
             resultArea.classList.add('active');
             
-            // 清空当前结果
             document.getElementById('benGuaName').textContent = '-';
             document.getElementById('bianGuaName').textContent = '-';
             document.getElementById('benGuaYao').innerHTML = '';
             document.getElementById('bianGuaYao').innerHTML = '';
             document.getElementById('dongyaoContent').textContent = '-';
             document.getElementById('dongyaoMeaning').textContent = '';
-            document.getElementById('guaExplanation').textContent = '点击下方的记录条目可查看详细卦象';
-            document.getElementById('methodInfo').innerHTML = '请从下方往卦列表中选择一条记录查看';
+            document.getElementById('guaExplanation').textContent = currentLang === 'en' ? 
+                'Select a record below to view the hexagram details' : 
+                '点击下方的记录条目可查看详细卦象';
+            document.getElementById('methodInfo').innerHTML = currentLang === 'en' ? 
+                'Please select a record from the history list below' : 
+                '请从下方往卦列表中选择一条记录查看';
             
-            // 显示历史记录
             const historyArea = document.getElementById('historyArea');
             showHistoryList();
             historyArea.style.display = 'block';
             
-            // 修改重新起卦按钮功能，让它能正确返回首页
             const restartBtn = document.getElementById('restartBtn');
             restartBtn.onclick = function() {
                 resultArea.classList.remove('active');
@@ -1788,18 +2393,15 @@ ${dongyaoMeanings[dongYao]}
                 lastQuestion = '';
                 historyArea.style.display = 'none';
                 
-                // 恢复其他板块显示
                 document.getElementById('warningBox').style.display = '';
                 document.getElementById('setupCard').style.display = '';
                 document.getElementById('methodCard').style.display = '';
                 document.getElementById('disclaimerBox').style.display = '';
                 
-                // 恢复原来的点击事件
                 restartBtn.onclick = originalRestart;
             };
         }
         
-        // 保存原始重启函数
         const originalRestart = function() {
             resultArea.classList.remove('active');
             divinationArea.classList.remove('active');
@@ -1808,83 +2410,94 @@ ${dongyaoMeanings[dongYao]}
             lastQuestion = '';
             document.getElementById('historyArea').style.display = 'none';
             
-            // 恢复其他板块显示
             document.getElementById('warningBox').style.display = '';
             document.getElementById('setupCard').style.display = '';
             document.getElementById('methodCard').style.display = '';
             document.getElementById('disclaimerBox').style.display = '';
         };
         
-        // 显示历史记录列表
         function showHistoryList() {
             const historyList = document.getElementById('historyList');
             const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
             
             if (history.length === 0) {
-                historyList.innerHTML = '<div style="text-align: center; color: #888; padding: 20px;">暂无历史记录</div>';
+                historyList.innerHTML = `<div style="text-align: center; color: #888; padding: 20px;">${t('toastNoHistory')}</div>`;
                 return;
             }
             
-            historyList.innerHTML = history.map(record => `
+            historyList.innerHTML = history.map(record => {
+                const isCurrentLang = record.lang || 'zh';
+                const benName = record.benGuaName[currentLang] || record.benGuaName[isCurrentLang];
+                const bianName = record.bianGuaName[currentLang] || record.bianGuaName[isCurrentLang];
+                const genderText = currentLang === 'en' ? (record.gender === 'male' ? 'Male' : 'Female') : (record.gender === 'male' ? '男士' : '女士');
+                const movingText = currentLang === 'en' ? `Line ${record.dongYao}` : `动${record.dongYao}爻`;
+                
+                return `
                 <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(201, 162, 39, 0.2); border-radius: 8px; padding: 12px; margin-bottom: 10px; cursor: pointer; transition: all 0.3s;" 
                      onmouseover="this.style.background='rgba(201, 162, 39, 0.1)'" 
                      onmouseout="this.style.background='rgba(255,255,255,0.05)'"
                      onclick="loadHistoryRecord(${record.id})">
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 5px;">
-                        <span style="color: #c9a227; font-weight: bold; font-size: 1rem;">${record.benGuaName} → ${record.bianGuaName}</span>
+                        <span style="color: #c9a227; font-weight: bold; font-size: 1rem;">${benName} → ${bianName}</span>
                         <span style="color: #888; font-size: 0.8rem;">${record.beijingTime.split(' ')[0]}</span>
                     </div>
                     <div style="color: #aaa; font-size: 0.85rem; margin-bottom: 3px;">
-                        问：${record.question.length > 20 ? record.question.substring(0, 20) + '...' : record.question}
+                        ${currentLang === 'en' ? 'Q' : '问'}：${record.question.length > 20 ? record.question.substring(0, 20) + '...' : record.question}
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
                         <span style="color: #666; font-size: 0.8rem;">
-                            动${record.dongYao}爻 | 本：${record.benGuaName} | 变：${record.bianGuaName} | ${record.gender === 'male' ? '男士' : '女士'}
+                            ${movingText} | ${currentLang === 'en' ? 'Primary' : '本'}：${benName} | ${currentLang === 'en' ? 'Changed' : '变'}：${bianName} | ${genderText}
                         </span>
                         <button onclick="event.stopPropagation(); deleteHistoryRecord(${record.id})" 
                                 style="background: transparent; border: 1px solid #666; color: #888; padding: 2px 8px; border-radius: 3px; cursor: pointer; font-size: 0.75rem;">
-                            删除
+                            Delete
                         </button>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
         
-        // 加载历史记录
         function loadHistoryRecord(id) {
             const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
             const record = history.find(h => h.id === id);
             if (!record) return;
             
-            // 恢复状态
             shangGua = record.shangGua;
             xiaGua = record.xiaGua;
             dongYao = record.dongYao;
             gender = record.gender;
             questionInput.value = record.question;
+            if (record.lang && record.lang !== currentLang) {
+                switchLanguage(record.lang);
+            }
             
-            // 隐藏往卦区域
             document.getElementById('historyArea').style.display = 'none';
             
-            // 直接显示结果（跳过起卦过程）
-            // 设置时间显示
+            // 恢复时间显示
             document.getElementById('beijingTime').textContent = record.beijingTime;
-            if (record.trueSolarTime) {
+            
+            // 关键修复：恢复真太阳时和时辰显示
+            if (record.trueSolarTime && record.dizhi) {
                 document.getElementById('trueSolarTime').textContent = record.trueSolarTime;
                 document.getElementById('dizhiTime').textContent = record.dizhi;
                 document.getElementById('trueSolarRow').style.display = 'flex';
                 document.getElementById('dizhiRow').style.display = 'flex';
+                // 隐藏地理位置信息（历史记录中没有保存经纬度细节）
+                document.getElementById('locationInfo').style.display = 'none';
+                document.getElementById('locationError').style.display = 'none';
             } else {
+                // 如果没有真太阳时数据（旧记录或定位失败），隐藏相关行
                 document.getElementById('trueSolarRow').style.display = 'none';
                 document.getElementById('dizhiRow').style.display = 'none';
+                document.getElementById('locationInfo').style.display = 'none';
+                document.getElementById('locationError').style.display = 'none';
             }
             
-            // 显示结果区域（使用原有逻辑）
             divinationArea.classList.remove('active');
             resultArea.classList.add('active');
             
             const benGua = guaData[record.benGuaCode];
-            document.getElementById('benGuaName').textContent = benGua ? benGua.name : '未知卦';
+            document.getElementById('benGuaName').textContent = benGua ? benGua.name[currentLang] : 'Unknown';
             
             const benGuaYaoContainer = document.getElementById('benGuaYao');
             benGuaYaoContainer.innerHTML = '';
@@ -1895,7 +2508,7 @@ ${dongyaoMeanings[dongYao]}
                 
                 const yaoNum = document.createElement('span');
                 yaoNum.className = 'yao-number';
-                yaoNum.textContent = yaoName[i];
+                yaoNum.textContent = currentLang === 'en' ? yaoName.en[i] : yaoName.zh[i];
                 
                 const yao = document.createElement('div');
                 yao.className = 'yao';
@@ -1912,7 +2525,7 @@ ${dongyaoMeanings[dongYao]}
             }
             
             const bianGua = guaData[record.bianGuaCode];
-            document.getElementById('bianGuaName').textContent = bianGua ? bianGua.name : '未知卦';
+            document.getElementById('bianGuaName').textContent = bianGua ? bianGua.name[currentLang] : 'Unknown';
             
             const bianGuaYaoContainer = document.getElementById('bianGuaYao');
             bianGuaYaoContainer.innerHTML = '';
@@ -1923,7 +2536,7 @@ ${dongyaoMeanings[dongYao]}
                 
                 const yaoNum = document.createElement('span');
                 yaoNum.className = 'yao-number';
-                yaoNum.textContent = yaoName[i];
+                yaoNum.textContent = currentLang === 'en' ? yaoName.en[i] : yaoName.zh[i];
                 
                 const yao = document.createElement('div');
                 yao.className = 'yao';
@@ -1938,34 +2551,49 @@ ${dongyaoMeanings[dongYao]}
             const dongyaoContent = document.getElementById('dongyaoContent');
             const dongyaoMeaning = document.getElementById('dongyaoMeaning');
             const isYangDong = record.benGuaCode[record.dongYao - 1] === '1';
-            dongyaoContent.textContent = `${yaoName[record.dongYao - 1]} ${isYangDong ? '阳爻' : '阴爻'} 发动`;
-            dongyaoMeaning.textContent = dongyaoMeanings[record.dongYao];
+            
+            const movingLineText = currentLang === 'en' ? 
+                `${yaoName.en[record.dongYao - 1]} ${isYangDong ? 'Yang' : 'Yin'} moves` : 
+                `${yaoName.zh[record.dongYao - 1]} ${isYangDong ? '阳爻' : '阴爻'} 发动`;
+            
+            dongyaoContent.textContent = movingLineText;
+            dongyaoMeaning.textContent = dongyaoMeanings[currentLang][record.dongYao];
             
             const explanation = document.getElementById('guaExplanation');
             let expText = '';
             
             if (benGua) {
-                expText += `本卦（重要性30—40%）为${benGua.name}，${benGua.explanation}\n\n`;
+                expText += (currentLang === 'en' ? 
+                    `Primary Hexagram (30-40% significance): ${benGua.name.en}. ${benGua.explanation.en}\n\n` : 
+                    `本卦（重要性30—40%）为${benGua.name.zh}，${benGua.explanation.zh}\n\n`);
             }
             
-            if (bianGua && bianGua.name !== benGua.name) {
-                expText += `变卦（重要性10—30%）为${bianGua.name}，${bianGua.explanation}\n\n`;
+            if (bianGua && bianGua.name[currentLang] !== benGua.name[currentLang]) {
+                expText += (currentLang === 'en' ? 
+                    `Changed Hexagram (10-30% significance): ${bianGua.name.en}. ${bianGua.explanation.en}\n\n` : 
+                    `变卦（重要性10—30%）为${bianGua.name.zh}，${bianGua.explanation.zh}\n\n`);
             }
             
-            expText += `动爻${yaoName[record.dongYao - 1]}发动，${isYangDong ? '阳变阴' : '阴变阳'}，得变卦。`;
+            expText += (currentLang === 'en' ? 
+                `${yaoName.en[record.dongYao - 1]} moves: ${isYangDong ? 'Yang becomes Yin' : 'Yin becomes Yang'}, creating the Changed Hexagram.` : 
+                `动爻${yaoName.zh[record.dongYao - 1]}发动，${isYangDong ? '阳变阴' : '阴变阳'}，得变卦。`);
             
             explanation.textContent = expText;
             
             const methodInfo = document.getElementById('methodInfo');
-            methodInfo.innerHTML = `
-                上卦：${baguaName[record.shangGua]}（${record.shangGua}） | 下卦：${baguaName[record.xiaGua]}（${record.xiaGua}） | 动爻：${yaoName[record.dongYao - 1]}（${record.dongYao}）<br>
-                起卦方式：高岛易断略筮法 | 性别：${record.gender === 'male' ? '男士' : '女士'}
-            `;
+            const upperName = currentLang === 'en' ? baguaName.en[record.shangGua] : baguaName.zh[record.shangGua];
+            const lowerName = currentLang === 'en' ? baguaName.en[record.xiaGua] : baguaName.zh[record.xiaGua];
+            const yaoText = currentLang === 'en' ? yaoName.en[record.dongYao - 1] : yaoName.zh[record.dongYao - 1];
+            const genderText = currentLang === 'en' ? (record.gender === 'male' ? 'Male' : 'Female') : (record.gender === 'male' ? '男士' : '女士');
+            const methodText = currentLang === 'en' ? "Takashima's Simplified Method" : "高岛易断略筮法";
             
-            showToast('已加载往卦记录');
+            methodInfo.innerHTML = currentLang === 'en' ? 
+                `Upper: ${upperName} (${record.shangGua}) | Lower: ${lowerName} (${record.xiaGua}) | Moving: ${yaoText} (${record.dongYao})<br>Method: ${methodText} | Gender: ${genderText}` : 
+                `上卦：${upperName}（${record.shangGua}） | 下卦：${lowerName}（${record.xiaGua}） | 动爻：${yaoText}（${record.dongYao}）<br>起卦方式：${methodText} | 性别：${genderText}`;
+            
+            showToast(t('toastLoaded'));
         }
         
-        // 删除单条历史记录
         function deleteHistoryRecord(id) {
             let history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
             history = history.filter(h => h.id !== id);
@@ -1973,12 +2601,11 @@ ${dongyaoMeanings[dongYao]}
             showHistoryList();
         }
         
-        // 清空所有历史记录
         function clearAllHistory() {
-            if (confirm('确定要清空所有往卦记录吗？此操作不可恢复。')) {
+            if (confirm(t('deleteConfirm'))) {
                 localStorage.removeItem(HISTORY_KEY);
                 showHistoryList();
-                showToast('往卦记录已清空');
+                showToast(t('toastHistoryCleared'));
             }
         }
     </script>
